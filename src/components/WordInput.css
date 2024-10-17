@@ -1,12 +1,13 @@
 .app-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+    align-items: center; /* Horizontally center */
+    justify-content: center; /* Vertically center */
+    min-height: 100vh; /* Ensure it takes the full height of the viewport */
     width: 100%;
     background: linear-gradient(to bottom, #7dd3fc, #e0f2fe);
     padding: 1rem;
+    box-sizing: border-box; /* Ensure padding is included in width/height */
   }
   
   .logo-placeholder {
@@ -20,9 +21,9 @@
   }
   
   .logo {
-    width: 100px; /* Resize logo */
-    height: 100px; /* Resize logo */
-    background-image: url('../assets/lcc_logo.png'); /* Add the logo image */
+    width: 100px;
+    height: 100px;
+    background-image: url('../assets/lcc_logo.png');
     background-size: cover;
     background-position: center;
     border-radius: 0.75rem;
@@ -121,10 +122,11 @@
     text-align: center;
   }
   
-  /* Responsive adjustments */
+  /* Responsive adjustments for mobile */
   @media (max-width: 768px) {
     .app-container {
       padding: 0.5rem;
+      justify-content: center; /* Ensure vertical centering */
     }
   
     .logo {
@@ -132,18 +134,27 @@
       height: 80px;
     }
   
-    .input-container, .confirmation-message {
-      max-width: 90%;
+    .input-container,
+    .confirmation-message {
+      max-width: 75%; /* Ensure the input container is 75% width on mobile */
       padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: center;
     }
   
     textarea {
       font-size: 1.25rem;
     }
   
+    .button-container {
+      max-width: 75%; /* Ensure the buttons are 75% width on mobile */
+      gap: 0.75rem;
+    }
+  
     button {
       font-size: 1.125rem;
-      padding: 0.65rem 1.75rem;
+      padding: 0.65rem 1.5rem;
     }
   }
   
@@ -153,13 +164,26 @@
       height: 60px;
     }
   
+    .input-container {
+      max-width: 75%;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+  
     textarea {
-      font-size: 1rem;
+      font-size: 1.125rem;
+      padding: 0.75rem;
+    }
+  
+    .button-container {
+      width: 100%;
+      gap: 0.5rem;
+      max-width: 75%;
     }
   
     button {
       font-size: 1rem;
-      padding: 0.5rem 1.5rem;
+      padding: 0.5rem 1rem;
     }
   }
   
