@@ -1,25 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import EnterWord from './pages/EnterWord';
+import DisplayWordCloud from './pages/DisplayWordCloud';
+import HomePage from './pages/HomePage'; // Assuming you have a HomePage component
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        {/* Home Page */}
+        <Route path="/" element={<HomePage />} />
+
+        {/* Page to enter a word */}
+        <Route path="/enter" element={<EnterWord />} />
+
+        {/* Page to display word cloud */}
+        <Route path="/display" element={<DisplayWordCloud />} />
+      </Routes>
+    </Router>
   );
 }
 
