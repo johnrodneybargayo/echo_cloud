@@ -1,14 +1,14 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import EnterWord from './pages/EnterWord';
 import DisplayWordCloud from './pages/DisplayWordCloud';
-import HomePage from './pages/HomePage'; // Assuming you have a HomePage component
+// import HomePage from './pages/HomePage'; // Commented out to disable the home page
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Home Page */}
-        <Route path="/" element={<HomePage />} />
+        {/* Redirect the home route to /enter */}
+        <Route path="/" element={<Navigate to="/enter" />} />
 
         {/* Page to enter a word */}
         <Route path="/enter" element={<EnterWord />} />
