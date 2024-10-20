@@ -1,0 +1,68 @@
+/* Wrapper for the gradient background */
+.wrapper {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #F39C12, #FF8A80, #A29BFE);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+/* Chart container centered on the page */
+.chart-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    height: 750px; /* Increased height for better label visibility */
+    padding: 2rem;
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Style for chart title */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #333;
+}
+
+/* Responsive design for smaller devices */
+@media (max-width: 1200px) {
+    .chart-wrapper {
+        height: 650px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .chart-wrapper {
+        height: 550px;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .chart-wrapper {
+        height: 500px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
