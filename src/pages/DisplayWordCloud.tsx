@@ -1,9 +1,9 @@
-// src/pages/DisplayWordCloud.tsx
 import React from 'react';
 import WordCloudComponent from '../components/WordCloud';
 import { useWords } from '../hooks/useWords';
+import './DisplayWordCloud.css';
 
-const DisplayWordCloud = () => {
+const DisplayWordCloud: React.FC = () => {
   const { words, loading } = useWords();
 
   if (loading) {
@@ -11,7 +11,7 @@ const DisplayWordCloud = () => {
   }
 
   return (
-    <div>
+    <div className="wordcloud-container">
       <h1>Echo Cloud</h1>
       <WordCloudComponent words={words} />
     </div>
