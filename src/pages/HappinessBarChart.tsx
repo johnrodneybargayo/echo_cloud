@@ -168,7 +168,7 @@ const HappinessBarChart: React.FC = () => {
       {/* Button to proceed to thank you page */}
       <div className="thank-you-button-container">
         <button onClick={handleThankYouClick} className="thank-you-btn">
-          Proceed to Thank You
+          End Game
         </button>
       </div>
     </div>
