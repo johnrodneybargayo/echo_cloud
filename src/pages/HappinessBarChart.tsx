@@ -2,7 +2,9 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
+import { useNavigate } from 'react-router-dom';
 import './HappinessBarChart.css';
+
 
 Chart.register(...registerables);
 
@@ -11,6 +13,7 @@ const HappinessBarChart: React.FC = () => {
     labels: [],
     datasets: [],
   });
+  const navigate = useNavigate();
 
   const emojis = useMemo(
     () => ['😡', '😞', '😐', '🙂', '😃', '😄', '😆', '😁', '😎', '🥳'],
@@ -25,17 +28,20 @@ const HappinessBarChart: React.FC = () => {
       const levels = snapshot.val() || {};
       const counts: { [key: number]: number } = {};
 
+      // Initialize counts for levels 1 through 10
       for (let i = 1; i <= 10; i++) {
         counts[i] = 0;
       }
 
+      // Count occurrences of each happiness level
       for (const key in levels) {
         const level = Number(levels[key].level);
         counts[level] = (counts[level] || 0) + 1;
       }
 
+      // Sort data in ascending order (smallest to largest number of people)
       const sortedData = Object.entries(counts)
-        .sort(([, a], [, b]) => b - a)
+        .sort(([, a], [, b]) => a - b) // Sort ascending by count
         .map(([key, value]) => ({ level: key, count: value }));
 
       const data = {
@@ -93,6 +99,10 @@ const HappinessBarChart: React.FC = () => {
     },
   };
 
+  const handleThankYouClick = () => {
+    navigate('/thank-you');
+  };
+
   return (
     <div className="wrapper">
       <div className="chart-wrapper">
@@ -113,7 +123,7 @@ const HappinessBarChart: React.FC = () => {
                     size: 16,
                     weight: 'bold',
                   },
-                  padding: 15, // Increase padding between the X-axis and chart bottom
+                  padding: 15,
                 },
               },
               y: {
@@ -131,7 +141,7 @@ const HappinessBarChart: React.FC = () => {
             },
             layout: {
               padding: {
-                bottom: 50, // Increase bottom padding to give space for X-axis labels
+                bottom: 50,
               },
             },
             animation: {
@@ -153,6 +163,13 @@ const HappinessBarChart: React.FC = () => {
           }}
           plugins={[customPlugin]}
         />
+      </div>
+
+      {/* Button to proceed to thank you page */}
+      <div className="thank-you-button-container">
+        <button onClick={handleThankYouClick} className="thank-you-btn">
+          Proceed to Thank You
+        </button>
       </div>
     </div>
   );

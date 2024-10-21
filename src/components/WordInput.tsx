@@ -1,4 +1,3 @@
-// src/components/WordInput.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSubmissionCooldown } from '../hooks/useSubmissionCooldown';
@@ -24,8 +23,8 @@ const WordInput: React.FC = () => {
       setIsSubmitted(true);
       setInputText('');
 
-      // Redirect to the happiness level page
-      navigate('/happiness-scale');
+      // Redirect to the DisplayWordCloud page
+      navigate('/display');
     }
   };
 
@@ -34,6 +33,9 @@ const WordInput: React.FC = () => {
       <div className="logo-placeholder">
         <div className="logo"></div>
       </div>
+
+      {/* Add the new heading below the logo */}
+      <h1>What is the source of your joy?</h1>
 
       {!isSubmitted ? (
         <>

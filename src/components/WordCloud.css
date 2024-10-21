@@ -1,16 +1,17 @@
-/* Wrapper for the gradient background */
-.wrapper {
+/* WordCloud.css */
+
+.word-cloud-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(135deg, #F39C12, #FF8A80, #A29BFE); /* Gradient background */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: linear-gradient(135deg, #F39C12, #FF8A80, #A29BFE); /* Gradient for the wrapper, not the canvas */
   padding: 2rem;
   box-sizing: border-box;
 }
 
-/* Title styling */
 .title {
   font-size: 3rem;
   font-weight: bold;
@@ -20,14 +21,39 @@
   animation: fadeIn 1s ease-in-out;
 }
 
-/* Word cloud canvas */
+.word-cloud-container {
+  margin-bottom: 2rem;
+}
+
 .word-cloud-canvas {
-  background-color: transparent;
+  background-color: transparent; /* Transparent background for the canvas */
   display: block;
   margin: 0 auto;
 }
 
-/* Fade-in animation for words */
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.navigate-btn {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: #FF8F34; /* Updated button color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+ 
+}
+
+.navigate-btn:hover {
+  background-color: #DA5367; /* Updated hover color */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
+}
+
+
 @keyframes fadeIn {
   from {
     opacity: 0;

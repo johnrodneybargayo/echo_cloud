@@ -1,68 +1,117 @@
-/* Wrapper for the gradient background */
-.wrapper {
-    width: 100%;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #F39C12, #FF8A80, #A29BFE);
+/* Import Fonts */
+@font-face {
+    font-family: 'Oblong';
+    src: url('../assets/fonts/oblong.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Helvegen';
+    src: url('../assets/fonts/Helvegen.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  /* Global Font Application */
+  body {
+    font-family: 'Helvegen', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Oblong', sans-serif;
+  }
+  
+  /* Wrapper for the gradient background */
+  .wrapper {
+      width: 100%;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #F39C12, #FF8A80, #A29BFE);
+      display: flex;
+      flex-direction: column; /* Align elements in a column */
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      box-sizing: border-box;
+      font-family: 'Helvegen', sans-serif; /* Helvegen applied globally for body text */
+  }
+  
+  /* Chart container centered on the page */
+  .chart-wrapper {
+      width: 100%;
+      max-width: 1000px;
+      height: 750px; /* Height of the chart */
+      padding: 2rem;
+      background-color: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2rem; /* Add margin between chart and button */
+  }
+  
+  /* Thank you button styles */
+  .thank-you-button-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    box-sizing: border-box;
-}
-
-/* Chart container centered on the page */
-.chart-wrapper {
-    width: 100%;
-    max-width: 1000px;
-    height: 750px; /* Increased height for better label visibility */
-    padding: 2rem;
-    background-color: white;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    box-sizing: border-box;
-    overflow: hidden;
-}
-
-/* Style for chart title */
-h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    color: #333;
-}
-
-/* Responsive design for smaller devices */
-@media (max-width: 1200px) {
-    .chart-wrapper {
-        height: 650px;
-    }
-
-    h1 {
-        font-size: 2rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .chart-wrapper {
-        height: 550px;
-    }
-
-    h1 {
-        font-size: 1.75rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .chart-wrapper {
-        height: 500px;
-    }
-
-    h1 {
-        font-size: 1.5rem;
-    }
-}
+    margin-top: 1.5rem;
+  }
+  
+  .thank-you-btn {
+    padding: 0.75rem 1.5rem; /* Smaller padding */
+    background-color: #16a34a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem; /* Slightly smaller font size */
+    font-family: 'Helvegen', sans-serif; /* Apply Helvegen for button text */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .thank-you-btn:hover {
+    background-color: #15803d;
+  }
+  
+  /* Style for chart title */
+  h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #333;
+      font-family: 'Oblong', sans-serif; /* Apply Oblong for the chart title */
+  }
+  
+  /* Responsive design for smaller devices */
+  @media (max-width: 1200px) {
+      .chart-wrapper {
+          height: 650px;
+      }
+  
+      h1 {
+          font-size: 2rem;
+      }
+  }
+  
+  @media (max-width: 768px) {
+      .chart-wrapper {
+          height: 550px;
+      }
+  
+      h1 {
+          font-size: 1.75rem;
+      }
+  }
+  
+  @media (max-width: 480px) {
+      .chart-wrapper {
+          height: 500px;
+      }
+  
+      h1 {
+          font-size: 1.5rem;
+      }
+  }
+  

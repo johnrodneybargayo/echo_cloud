@@ -1,27 +1,55 @@
+/* Apply Helvegen to all body text */
+body {
+  font-family: 'Helvegen', sans-serif;
+}
+
+/* Apply Oblong to headers globally */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Oblong', sans-serif;
+}
+
+/* Word Cloud styles */
 .word-cloud {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  .word-cloud span {
-    margin: 5px;
-  }
-  
-  form {
-    display: flex;
-    gap: 10px;
-  }
-  
-  input {
-    padding: 8px;
-  }
-  
-  button {
-    padding: 8px;
-    background-color: #02a56e;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-family: 'Helvegen', sans-serif; /* Apply Helvegen for the word cloud text */
+}
+
+.word-cloud span {
+  margin: 5px;
+  font-family: 'Helvegen', sans-serif; /* Ensures all span elements inside the word cloud use Helvegen */
+}
+
+/* Form Styles */
+form {
+  display: flex;
+  gap: 10px;
+  font-family: 'Helvegen', sans-serif; /* Applies Helvegen for form text */
+}
+
+/* Input field styles */
+input {
+  padding: 8px;
+  font-family: 'Helvegen', sans-serif; /* Applies Helvegen for the input text */
+  border-radius: 4px; /* Adds rounded corners */
+  border: 1px solid #ccc; /* Light border for the input */
+  width: 100%; /* Makes input take full width within its container */
+  box-sizing: border-box; /* Ensures padding doesn’t affect the width */
+}
+
+/* Button styles */
+button {
+  padding: 8px 16px; /* Adjust padding for better button size */
+  background-color: #02a56e;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-family: 'Helvegen', sans-serif; /* Applies Helvegen for button text */
+  border-radius: 4px; /* Adds rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effects */
+}
+
+button:hover {
+  background-color: #028a5e; /* Slightly darker color on hover */
+}

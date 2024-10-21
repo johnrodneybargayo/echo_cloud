@@ -1,4 +1,3 @@
-// src/components/HappinessInput.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDatabase, ref, push } from 'firebase/database'; // Firebase database functions
@@ -30,8 +29,8 @@ const HappinessInput: React.FC = () => {
       setIsSubmitted(true);
       recordSubmissionTime(); // Start the cooldown timer
 
-      // Redirect to home after submission or show a confirmation message
-      navigate('/');
+      // Redirect to the happiness-bar-chart page after submission
+      navigate('/happiness-bar-chart');
     } else {
       alert('Please enter a valid number between 1 and 10.');
     }
