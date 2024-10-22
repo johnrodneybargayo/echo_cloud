@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSubmissionCooldown } from '../hooks/useSubmissionCooldown';
 import { useWords } from '../hooks/useWords';
-import './WordInput.css';
+import './WordInput.css'; // Import scoped CSS
 
 const WordInput: React.FC = () => {
   const { submitWord } = useWords();
@@ -29,17 +29,17 @@ const WordInput: React.FC = () => {
   };
 
   return (
-    <div className="app-container">
-      <div className="logo-placeholder">
-        <div className="logo"></div>
+    <div className="word-input-page"> {/* Scoped class for the whole page */}
+      <div className="word-input-logo-placeholder">
+        <div className="word-input-logo"></div>
       </div>
 
       {/* Add the new heading below the logo */}
-      <h1>What is the source of your joy?</h1>
+      <h1 className="word-input-heading">What is the source of your joy?</h1>
 
       {!isSubmitted ? (
         <>
-          <div className="input-container">
+          <div className="word-input-container">
             <textarea
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
@@ -50,19 +50,19 @@ const WordInput: React.FC = () => {
             />
           </div>
 
-          <div className="button-container">
-            <button onClick={handleSubmit} className="submit-btn" disabled={!canSubmit}>
+          <div className="word-input-button-container">
+            <button onClick={handleSubmit} className="word-input-submit-btn" disabled={!canSubmit}>
               Submit
             </button>
           </div>
 
           {!canSubmit && timeLeft && (
-            <p>Please wait {(timeLeft / 60000).toFixed(1)} minutes before submitting again.</p>
+            <p className="word-input-cooldown-msg">Please wait {(timeLeft / 60000).toFixed(1)} minutes before submitting again.</p>
           )}
         </>
       ) : (
-        <div className="confirmation-container">
-          <div className="confirmation-message">
+        <div className="word-input-confirmation-container">
+          <div className="word-input-confirmation-message">
             <p>{message}</p>
           </div>
         </div>

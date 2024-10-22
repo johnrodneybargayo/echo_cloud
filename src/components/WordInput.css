@@ -1,5 +1,5 @@
-/* Full-screen gradient background for the form page */
-.app-container {
+/* Full-screen gradient background for the word input page */
+.word-input-page {
   display: flex;
   flex-direction: column;
   align-items: center; /* Horizontally center */
@@ -12,7 +12,7 @@
 }
 
 /* Centered logo placeholder */
-.logo-placeholder {
+.word-input-logo-placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,17 +23,17 @@
 }
 
 /* Logo inside the placeholder */
-.logo {
+.word-input-logo {
   width: 100px;
   height: 100px;
-  background-image: url('../assets/lcc_logo.png');
+  background-image: url('../assets/lcc_logo.png'); /* Scoped to this page */
   background-size: cover;
   background-position: center;
   border-radius: 0.75rem;
 }
 
-/* Input container with larger text area */
-.input-container {
+/* Larger text area container */
+.word-input-container {
   width: 100%;
   max-width: 28rem;
   background-color: white;
@@ -46,6 +46,7 @@
   align-items: center;
 }
 
+/* Input area */
 textarea {
   width: 100%;
   height: auto;
@@ -63,8 +64,8 @@ textarea:focus {
   border-color: #3b82f6;
 }
 
-/* Button container with adjustments for button size */
-.button-container {
+/* Button container */
+.word-input-button-container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -72,7 +73,8 @@ textarea:focus {
   max-width: 28rem;
 }
 
-button {
+/* Submit button */
+.word-input-submit-btn {
   width: 100%;
   padding: 0.75rem 2rem;
   border: none;
@@ -81,40 +83,17 @@ button {
   font-weight: 600;
   color: white;
   cursor: pointer;
+  background-color: #2563eb;
   transition: transform 0.1s ease-in-out;
 }
 
-button:hover {
+.word-input-submit-btn:hover {
+  background-color: #1d4ed8;
   transform: scale(1.05);
 }
 
-/* Color classes for buttons */
-.submit-btn {
-  background-color: #2563eb;
-}
-
-.submit-btn:hover {
-  background-color: #1d4ed8;
-}
-
-.clear-btn {
-  background-color: #14b8a6;
-}
-
-.clear-btn:hover {
-  background-color: #0d9488;
-}
-
-.exit-btn {
-  background-color: #8b5cf6;
-}
-
-.exit-btn:hover {
-  background-color: #7c3aed;
-}
-
-/* Confirmation message style */
-.confirmation-container {
+/* Confirmation message */
+.word-input-confirmation-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -122,41 +101,44 @@ button:hover {
   max-width: 28rem;
 }
 
-.confirmation-message p {
+.word-input-confirmation-message p {
   font-size: 1.5rem;
   font-weight: 600;
   color: #16a34a;
   text-align: center;
 }
 
+/* Cooldown message style */
+.word-input-cooldown-msg {
+  color: red;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
 /* Responsive adjustments for tablet and mobile views */
 @media (max-width: 768px) {
-  .app-container {
+  .word-input-page {
       padding: 0.5rem;
-      justify-content: center; /* Ensure vertical centering */
+      justify-content: center;
   }
 
-  .logo {
+  .word-input-logo {
       width: 80px;
       height: 80px;
   }
 
-  .input-container,
-  .confirmation-message {
-      max-width: 75%; /* Ensure the input container is 75% width on mobile */
+  .word-input-container {
+      max-width: 75%;
       padding: 1rem;
       margin-bottom: 1rem;
-      display: flex;
-      justify-content: center;
   }
 
   textarea {
       font-size: 1.25rem;
   }
 
-  .button-container {
-      max-width: 75%; /* Ensure the buttons are 75% width on mobile */
-      gap: 0.75rem;
+  .word-input-button-container {
+      max-width: 75%;
   }
 
   button {
@@ -166,12 +148,12 @@ button:hover {
 }
 
 @media (max-width: 480px) {
-  .logo {
+  .word-input-logo {
       width: 60px;
       height: 60px;
   }
 
-  .input-container {
+  .word-input-container {
       max-width: 75%;
       padding: 1rem;
       margin-bottom: 1rem;
@@ -182,9 +164,8 @@ button:hover {
       padding: 0.75rem;
   }
 
-  .button-container {
+  .word-input-button-container {
       width: 100%;
-      gap: 0.5rem;
       max-width: 75%;
   }
 
