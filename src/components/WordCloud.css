@@ -7,22 +7,22 @@
   justify-content: center;
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(135deg, #F39C12, #FF8A80, #A29BFE); /* Gradient for the wrapper, not the canvas */
+  background: #fff; /* Gradient for the wrapper, not the canvas */
   padding: 2rem;
   box-sizing: border-box;
 }
 
 .title {
-  font-size: 3rem;
+  font-size: 5rem;
   font-weight: bold;
   text-align: center;
-  color: white;
+  color: rgb(19, 40, 194);
   margin-bottom: 1.5rem;
   animation: fadeIn 1s ease-in-out;
 }
 
 .word-cloud-container {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .word-cloud-canvas {
@@ -39,7 +39,7 @@
 .navigate-btn {
   padding: 10px 20px;
   font-size: 1.2rem;
-  background-color: #FF8F34; /* Updated button color */
+  background-color: #0f2f96; /* Updated button color */
   color: white;
   border: none;
   border-radius: 5px;

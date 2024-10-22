@@ -53,7 +53,7 @@ const WordCloudComponent: React.FC<WordCloudProps> = ({ words }) => {
       WordCloud(canvas, {
         list: wordArray,
         gridSize: 10,
-        weightFactor: (size: number) => Math.max(size * 5, 18),
+        weightFactor: (size: number) => Math.max(size * 10, 20),
         fontFamily: 'Arial, sans-serif',
         color: (word: string) => updatedColors[word],
         rotateRatio: 0.5,
