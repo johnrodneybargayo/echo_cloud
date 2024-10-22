@@ -4,7 +4,7 @@ import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import { useNavigate } from 'react-router-dom';
 import './HappinessBarChart.css';
-
+import logo from '../assets/lcc_logo.png';  // Import the logo from assets
 
 Chart.register(...registerables);
 
@@ -39,18 +39,14 @@ const HappinessBarChart: React.FC = () => {
         counts[level] = (counts[level] || 0) + 1;
       }
 
-      // Sort data in ascending order (smallest to largest number of people)
-      const sortedData = Object.entries(counts)
-        .sort(([, a], [, b]) => a - b) // Sort ascending by count
-        .map(([key, value]) => ({ level: key, count: value }));
-
+      // Do not sort the data, keep it in natural ascending order
       const data = {
-        labels: sortedData.map((item) => `Level ${item.level}`),
+        labels: Object.keys(counts).map((key) => `Level ${key}`),
         datasets: [
           {
             label: 'Number of Responses',
-            data: sortedData.map((item) => item.count),
-            backgroundColor: sortedData.map(
+            data: Object.values(counts),
+            backgroundColor: Object.keys(counts).map(
               () =>
                 `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.7)`
             ),
@@ -105,6 +101,9 @@ const HappinessBarChart: React.FC = () => {
 
   return (
     <div className="wrapper">
+      {/* Add logo at the top */}
+      <img src={logo} alt="Logo" className="logo" />
+      
       <div className="chart-wrapper">
         <h1>Happiness Level Responses</h1>
         <Bar
@@ -165,7 +164,6 @@ const HappinessBarChart: React.FC = () => {
         />
       </div>
 
-      {/* Button to proceed to thank you page */}
       <div className="thank-you-button-container">
         <button onClick={handleThankYouClick} className="thank-you-btn">
           End Game
