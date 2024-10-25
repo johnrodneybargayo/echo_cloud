@@ -5,7 +5,7 @@ body {
 
 /* Apply Oblong to headers globally */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Oblong', sans-serif;
+  font-family: 'Helvegen', sans-serif;
 }
 
 /* Word Cloud styles */

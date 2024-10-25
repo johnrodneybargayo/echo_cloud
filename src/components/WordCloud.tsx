@@ -8,18 +8,9 @@ interface WordCloudProps {
   words: Word[];
 }
 
-// New readable color palette
 const readableColorPalette = [
-  '#2B2B2B', // Dark Gray
-  '#333333', // Almost Black
-  '#4A4A4A', // Mid-tone Gray
-  '#6B6B6B', // Lighter Gray
-  '#C74C4C', // Dark Red
-  '#005F73', // Dark Cyan
-  '#0A9396', // Muted Teal
-  '#BB3E03', // Dark Orange
-  '#E9D8A6', // Light Beige
-  '#370617', // Dark Burgundy
+  '#2B2B2B', '#333333', '#4A4A4A', '#6B6B6B', '#C74C4C', 
+  '#005F73', '#0A9396', '#BB3E03', '#E9D8A6', '#370617'
 ];
 
 const WordCloudComponent: React.FC<WordCloudProps> = ({ words }) => {
@@ -30,7 +21,6 @@ const WordCloudComponent: React.FC<WordCloudProps> = ({ words }) => {
   useEffect(() => {
     if (canvasRef.current && words.length > 0) {
       const canvas = canvasRef.current;
-
       const updatedColors = { ...wordColors };
       let colorsChanged = false;
 
@@ -41,26 +31,29 @@ const WordCloudComponent: React.FC<WordCloudProps> = ({ words }) => {
         }
       });
 
-      if (colorsChanged) {
-        setWordColors(updatedColors); // Only update state if the colors changed
-      }
+      if (colorsChanged) setWordColors(updatedColors);
 
-      const wordArray = words.map((word) => [
-        word.word,
-        word.count,
-      ]);
+      // Sort words by count to ensure larger words come first
+      const sortedWords = words.sort((a, b) => b.count - a.count);
+
+      const wordArray = sortedWords.map((word) => [word.word, word.count]);
 
       WordCloud(canvas, {
         list: wordArray,
-        gridSize: 10,
-        weightFactor: (size: number) => Math.max(size * 10, 20),
+        gridSize: 12,
+        weightFactor: (size: number) => Math.max(size * 8, 20), // Adjust size multiplier if necessary
         fontFamily: 'Arial, sans-serif',
         color: (word: string) => updatedColors[word],
-        rotateRatio: 0.5,
+        rotateRatio: 0.5, // Allows some words to rotate
         rotationSteps: 2,
-        backgroundColor: 'transparent',
+        backgroundColor: 'rgba(240, 240, 240, 0.7)', // Slightly off-white background
         drawOutOfBound: false,
-        shuffle: true,
+        shuffle: false, // Keep larger words more centered
+        origin: [canvas.width / 2, canvas.height / 2], // Start placing words from the center
+        rotate: (item: [string, number]) => {
+          // Larger words (based on count > 30) will not rotate, remaining horizontal
+          return item[1] > 30 ? 0 : (Math.random() > 0.5 ? 90 : 0); // Smaller words can rotate randomly
+        },
         click: (item: [string, number]) => {
           console.log(`You clicked on ${item[0]}`);
         },
@@ -77,10 +70,8 @@ const WordCloudComponent: React.FC<WordCloudProps> = ({ words }) => {
 
   return (
     <div className="word-cloud-wrapper">
-      {/* Remove this title if it's a duplicate */}
-      <h1 className="title">Echo Cloud</h1>
       <div className="word-cloud-container">
-        <canvas ref={canvasRef} width={800} height={600} className="word-cloud-canvas"></canvas>
+        <canvas ref={canvasRef} width={1800} height={600} className="word-cloud-canvas"></canvas>
       </div>
       <div className="button-container">
         <button className="navigate-btn" onClick={handleButtonClick}>

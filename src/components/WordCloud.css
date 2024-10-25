@@ -7,18 +7,9 @@
   justify-content: center;
   width: 100%;
   min-height: 100vh;
-  background: #fff; /* Gradient for the wrapper, not the canvas */
+  background: #f0f0f0; /* Slightly off-white for softer background */
   padding: 2rem;
   box-sizing: border-box;
-}
-
-.title {
-  font-size: 5rem;
-  font-weight: bold;
-  text-align: center;
-  color: rgb(19, 40, 194);
-  margin-bottom: 1.5rem;
-  animation: fadeIn 1s ease-in-out;
 }
 
 .word-cloud-container {
@@ -26,9 +17,10 @@
 }
 
 .word-cloud-canvas {
-  background-color: transparent; /* Transparent background for the canvas */
+  background-color: transparent;
   display: block;
   margin: 0 auto;
+  transition: all 4s ease; /* Transition effect for smoother rendering over 4 seconds */
 }
 
 .button-container {
@@ -39,20 +31,20 @@
 .navigate-btn {
   padding: 10px 20px;
   font-size: 1.2rem;
-  background-color: #0f2f96; /* Updated button color */
+  background-color: #0f2f96;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
- 
 }
 
 .navigate-btn:hover {
-  background-color: #DA5367; /* Updated hover color */
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
+  background-color: #DA5367;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
+ 
 
 @keyframes fadeIn {
   from {
