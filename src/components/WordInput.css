@@ -118,30 +118,32 @@ textarea:focus {
 /* Responsive adjustments for tablet and mobile views */
 @media (max-width: 768px) {
   .word-input-page {
-      padding: 0.5rem;
-      justify-content: center;
+      padding: 1rem;
+      justify-content: flex-start; /* Center vertically on smaller screens */
   }
 
   .word-input-logo {
-      width: 80px;
-      height: 80px;
+      width: 70px;
+      height: 70px;
+      margin-bottom: 1.5rem;
   }
 
   .word-input-container {
-      max-width: 75%;
+      max-width: 85%;
       padding: 1rem;
       margin-bottom: 1rem;
   }
 
   textarea {
       font-size: 1.25rem;
+      padding: 0.75rem;
   }
 
   .word-input-button-container {
-      max-width: 75%;
+      max-width: 85%;
   }
 
-  button {
+  .word-input-submit-btn {
       font-size: 1.125rem;
       padding: 0.65rem 1.5rem;
   }
@@ -151,26 +153,32 @@ textarea:focus {
   .word-input-logo {
       width: 60px;
       height: 60px;
-  }
-
-  .word-input-container {
-      max-width: 75%;
-      padding: 1rem;
       margin-bottom: 1rem;
   }
 
-  textarea {
-      font-size: 1.125rem;
+  .word-input-container {
+      max-width: 90%;
       padding: 0.75rem;
+      margin-bottom: 0.75rem;
+  }
+
+  textarea {
+      font-size: 1rem;
+      padding: 0.5rem;
   }
 
   .word-input-button-container {
       width: 100%;
-      max-width: 75%;
+      max-width: 90%;
   }
 
-  button {
-      font-size: 1rem;
+  .word-input-submit-btn {
+      font-size: 0.9rem;
       padding: 0.5rem 1rem;
+  }
+
+  .word-input-cooldown-msg {
+      font-size: 0.9rem;
+      text-align: center;
   }
 }
