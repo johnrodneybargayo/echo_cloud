@@ -8,19 +8,21 @@
   width: 100%;
   min-height: 100vh;
   background: #f0f0f0; /* Slightly off-white for softer background */
-  padding: 2rem;
+  padding: 1rem;
   box-sizing: border-box;
 }
 
 .word-cloud-container {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
+  width: 100%;
 }
 
 .word-cloud-canvas {
-  background-color: transparent;
   display: block;
   margin: 0 auto;
-  transition: all 4s ease; /* Transition effect for smoother rendering over 4 seconds */
+  background-color: transparent;
+  max-width: 100%;
+  height: auto;
 }
 
 .button-container {
@@ -30,7 +32,7 @@
 
 .navigate-btn {
   padding: 10px 20px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   background-color: #0f2f96;
   color: white;
   border: none;
@@ -44,15 +46,13 @@
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
- 
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
+/* Responsive Design */
+@media only screen and (max-width: 768px) {
+  .navigate-btn {
+    font-size: 0.9rem;
   }
-  to {
-    opacity: 1;
-    transform: scale(1);
+
+  .word-cloud-wrapper {
+    padding: 1rem;
   }
 }
