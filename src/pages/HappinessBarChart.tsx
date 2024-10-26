@@ -4,7 +4,7 @@ import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import { useNavigate } from 'react-router-dom';
 import './HappinessBarChart.css';
-import logo from '../assets/lcc_logo.png';  // Import the logo from assets
+import logo from '../assets/lcc_logo.png';
 
 Chart.register(...registerables);
 
@@ -16,7 +16,7 @@ const HappinessBarChart: React.FC = () => {
   const navigate = useNavigate();
 
   const emojis = useMemo(
-    () => ['😡', '😞', '😐', '🙂', '😃', '😄', '😆', '😁', '😎', '🥳'],
+    () => ['😢', '😞', '😐', '🙂', '😃', '😄', '😆', '😁', '😎', '🥳'],
     []
   );
 
@@ -28,18 +28,15 @@ const HappinessBarChart: React.FC = () => {
       const levels = snapshot.val() || {};
       const counts: { [key: number]: number } = {};
 
-      // Initialize counts for levels 1 through 10
       for (let i = 1; i <= 10; i++) {
         counts[i] = 0;
       }
 
-      // Count occurrences of each happiness level
       for (const key in levels) {
         const level = Number(levels[key].level);
         counts[level] = (counts[level] || 0) + 1;
       }
 
-      // Do not sort the data, keep it in natural ascending order
       const data = {
         labels: Object.keys(counts).map((key) => `Level ${key}`),
         datasets: [
@@ -52,6 +49,8 @@ const HappinessBarChart: React.FC = () => {
             ),
             borderColor: 'rgba(0, 0, 0, 0.1)',
             borderWidth: 1,
+            barPercentage: 0.8,
+            categoryPercentage: 0.6,
           },
         ],
       };
@@ -76,11 +75,12 @@ const HappinessBarChart: React.FC = () => {
         const emoji = emojis[level - 1];
         const x = bar.x;
 
-        const emojiFontSize = Math.min(barWidth * 0.75, 50);
-        const countFontSize = Math.min(barWidth * 0.4, 25);
+        const emojiFontSize = Math.min(Math.max(barWidth * 0.6, 30), 50);
+        const countFontSize = Math.min(Math.max(barWidth * 0.3, 20), 30);
 
-        const yEmoji = Math.max(bar.y - 80, emojiFontSize + 20);
-        const yCount = bar.y - 30;
+        // Adjust positions to bring elements closer together
+        const yEmoji = Math.max(bar.y - 45, emojiFontSize + 10);
+        const yCount = bar.y - 5; // Closer to the emoji
 
         ctx.font = `${emojiFontSize}px Arial`;
         ctx.textAlign = 'center';
@@ -101,9 +101,8 @@ const HappinessBarChart: React.FC = () => {
 
   return (
     <div className="wrapper">
-      {/* Add logo at the top */}
       <img src={logo} alt="Logo" className="logo" />
-      
+
       <div className="chart-wrapper">
         <h1>Happiness Level Responses</h1>
         <Bar
@@ -122,7 +121,7 @@ const HappinessBarChart: React.FC = () => {
                     size: 16,
                     weight: 'bold',
                   },
-                  padding: 15,
+                  padding: 10,
                 },
               },
               y: {
@@ -140,7 +139,7 @@ const HappinessBarChart: React.FC = () => {
             },
             layout: {
               padding: {
-                bottom: 50,
+                bottom: 20,
               },
             },
             animation: {
