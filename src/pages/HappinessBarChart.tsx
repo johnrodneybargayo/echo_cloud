@@ -76,7 +76,7 @@ const HappinessBarChart: React.FC = () => {
         const x = bar.x;
 
         const emojiFontSize = Math.min(Math.max(barWidth * 0.6, 30), 50);
-        const countFontSize = Math.min(Math.max(barWidth * 0.3, 20), 30);
+        const countFontSize = Math.min(Math.max(barWidth * 0.3, 10), 20);
 
         // Adjust positions to bring elements closer together
         const yEmoji = Math.max(bar.y - 45, emojiFontSize + 10);
