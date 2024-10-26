@@ -127,7 +127,7 @@ const HappinessBarChart: React.FC = () => {
               },
               y: {
                 beginAtZero: true,
-                max: 300,
+                max: 250,
                 grid: {
                   display: true,
                 },
