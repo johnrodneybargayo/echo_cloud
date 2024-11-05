@@ -1,37 +1,32 @@
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import EnterWord from './pages/EnterWord';
-import DisplayWordCloud from './pages/DisplayWordCloud';
-import HappinessInput from './components/HappinessInput'; // Import the Happiness Input component
+import WordInput from './components/WordInput';
+import DisplayWordCloudWrapper from './components/DisplayWordCloudWrapper'; // Use the new wrapper component
+import HappinessInput from './components/HappinessInput';
 import HappinessBarChart from './pages/HappinessBarChart';
 import ThankYouPage from './pages/ThankYouPage';
-import AdminPage from './pages/AdminPage'; // Import the AdminPage component
+import AdminPage from './pages/AdminPage';
+import QuestionManager from './components/QuestionManager';
+import QuestionDisplay from './components/QuestionDisplay';
+import { QuestionsProvider } from './context/QuestionsContext';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Redirect the home route to /enter */}
-        <Route path="/" element={<Navigate to="/enter" />} />
-
-        {/* Page to enter a word */}
-        <Route path="/enter" element={<EnterWord />} />
-
-        {/* Page to display word cloud */}
-        <Route path="/display" element={<DisplayWordCloud />} />
-
-        {/* Add the happiness input page */}
-        <Route path="/happiness-scale" element={<HappinessInput />} />
-
-        {/* Add the happiness bar chart page */}
-        <Route path="/happiness-bar-chart" element={<HappinessBarChart />} />
-
-        {/* Thank You page */}
-        <Route path="/thank-you" element={<ThankYouPage />} />
-
-        {/* Admin page to clear Firebase database */}
-        <Route path="/admin" element={<AdminPage />} />
-      </Routes>
-    </Router>
+    <QuestionsProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Navigate to="/manage-questions" />} />
+          <Route path="/manage-questions" element={<QuestionManager />} />
+          <Route path="/enter/:questionId" element={<WordInput />} />
+          <Route path="/display/:questionId" element={<DisplayWordCloudWrapper />} />
+          <Route path="/happiness-scale" element={<HappinessInput />} />
+          <Route path="/happiness-bar-chart" element={<HappinessBarChart />} />
+          <Route path="/thank-you" element={<ThankYouPage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/question-display/:questionId" element={<QuestionDisplay />} />
+        </Routes>
+      </Router>
+    </QuestionsProvider>
   );
 }
 

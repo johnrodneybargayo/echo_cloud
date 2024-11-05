@@ -32,6 +32,20 @@ const AdminPage: React.FC = () => {
       });
   };
 
+  // Function to clear questions in Firebase
+  const clearQuestionsInDatabase = () => {
+    const db = getDatabase();
+    const questionsRef = ref(db, 'questions'); // Reference to the 'questions' node in the database
+
+    remove(questionsRef)
+      .then(() => {
+        alert('Questions cleared from the database.');
+      })
+      .catch((error) => {
+        alert('Failed to clear questions: ' + error.message);
+      });
+  };
+
   return (
     <div className="admin-container">
       <h1>Admin Page</h1>
@@ -46,6 +60,11 @@ const AdminPage: React.FC = () => {
         {/* Button to clear happiness levels */}
         <button className="clear-btn" onClick={clearHappinessLevelsInDatabase}>
           Clear Happiness Levels from Firebase
+        </button>
+
+        {/* Button to clear questions */}
+        <button className="clear-btn" onClick={clearQuestionsInDatabase}>
+          Clear Questions from Firebase
         </button>
       </div>
     </div>
