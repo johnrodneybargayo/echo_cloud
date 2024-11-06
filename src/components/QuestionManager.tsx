@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addQuestion, getQuestions, updateQuestion } from '../firebase/firebaseService';
+import { addQuestion, getQuestions, updateQuestion, deleteQuestion } from '../firebase/firebaseService';
 import mudduGif from '../assets/gif/muddu.gif';
 import './QuestionManager.css';
 
@@ -60,6 +60,18 @@ const QuestionManager: React.FC = () => {
     setQuestionType(question.type);
   };
 
+  const handleDeleteQuestion = async (questionId: string) => {
+    if (window.confirm("Are you sure you want to delete this question?")) {
+      try {
+        await deleteQuestion(questionId);
+        const updatedQuestions = questions.filter((question) => question.id !== questionId);
+        setQuestions(updatedQuestions);
+      } catch (error) {
+        console.error('Failed to delete question:', error);
+      }
+    }
+  };
+
   const handleStartPresentation = () => {
     if (questions.length > 0) {
       const firstQuestionId = questions[0].id;
@@ -85,13 +97,13 @@ const QuestionManager: React.FC = () => {
   };
 
   return (
-    <div className="qm-full-page-container">
-      <div className="qm-gif-container">
+    <div className="full-page-container">
+      <div className="gif-container">
         <img src={mudduGif} alt="Ami Fat Cat GIF" />
       </div>
-      <div className="qm-question-manager">
+      <div className="question-manager">
         <h2>Question Manager</h2>
-        <div className="qm-question-form">
+        <div className="question-form">
           <input
             type="text"
             placeholder="Enter your question"
@@ -111,27 +123,30 @@ const QuestionManager: React.FC = () => {
         </div>
 
         {paginatedQuestions.length > 0 && (
-          <div className={`qm-questions-grid ${isFading ? 'qm-fade-out' : ''}`}>
+          <div className={`questions-grid ${isFading ? 'fade-out' : ''}`}>
             {paginatedQuestions.map((question, index) => (
               <div
                 key={question.id}
-                className="qm-question-item"
+                className="question-item"
                 style={{
                   backgroundColor: question.type === 'wordCloud' ? '#fce5cd' : '#d0e0e3',
                 }}
               >
                 <h4>Question {index + 1 + (currentPage - 1) * itemsPerPage}:</h4>
-                <p className="qm-question-text">{question.text}</p>
-                <p>Type: {question.type === 'wordCloud' ? 'Word Cloud' : 'Scale Meter'}</p>
-                <p>ID: {question.id}</p>
-                <button onClick={() => handleEditQuestion(question)}>Edit</button>
+                <p className="question-text">{question.text}</p>
+                <p className="type-id">Type: {question.type === 'wordCloud' ? 'Word Cloud' : 'Scale Meter'}</p>
+                <p className="type-id">ID: {question.id}</p>
+                <div className="button-group">
+                  <button className="edit-button" onClick={() => handleEditQuestion(question)}>Edit</button>
+                  <button className="delete-button" onClick={() => handleDeleteQuestion(question.id)}>Delete</button>
+                </div>
               </div>
             ))}
           </div>
         )}
 
         {/* Pagination Controls */}
-        <div className="qm-pagination">
+        <div className="pagination">
           {Array.from({ length: totalPages }, (_, i) => (
             <button
               key={i + 1}
@@ -145,7 +160,7 @@ const QuestionManager: React.FC = () => {
 
         <button
           onClick={handleStartPresentation}
-          className="qm-start-presentation-btn"
+          className="start-presentation-btn"
           disabled={questions.length === 0}
         >
           Start Presentation

@@ -1,5 +1,5 @@
 /* Full Page Container for Centering */
-.qm-full-page-container {
+.full-page-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,7 +11,7 @@
 }
 
 /* GIF Container - Positioned to align nicely */
-.qm-gif-container {
+.gif-container {
   position: absolute;
   bottom: 20px;
   left: 20px;
@@ -22,12 +22,12 @@
 
 /* Hide GIF on Mobile and Tablet */
 @media (max-width: 1024px) {
-  .qm-gif-container {
+  .gif-container {
     display: none;
   }
 }
 
-.qm-question-manager {
+.question-manager {
   max-width: 800px;
   width: 100%;
   background-color: #ffffff;
@@ -40,7 +40,7 @@
 }
 
 /* Form Styling */
-.qm-question-form {
+.question-form {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -48,8 +48,8 @@
   justify-content: center;
 }
 
-.qm-question-form input,
-.qm-question-form select {
+.question-form input,
+.question-form select {
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #d1d5db;
@@ -59,9 +59,9 @@
   background-color: #f7f9fc;
 }
 
-.qm-question-form button {
+.question-form button {
   padding: 10px 16px;
-  background-color: #0077b6;
+  background-color: #0077b6; /* Button background color */
   color: #ffffff;
   border: none;
   border-radius: 6px;
@@ -70,56 +70,59 @@
   transition: background-color 0.3s;
 }
 
-.qm-question-form button:hover {
-  background-color: #005f8a;
+.question-form button:hover {
+  background-color: #005f8a; /* Button hover color */
 }
 
-/* Fade animation for questions */
-.qm-questions-grid {
+.questions-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
   margin-top: 20px;
+}
+
+/* Fade animation for questions */
+.questions-grid {
   opacity: 1;
   transition: opacity 0.5s ease;
 }
 
-.qm-questions-grid.qm-fade-out {
+.questions-grid.fade-out {
   opacity: 0;
 }
 
-.qm-question-item {
+.question-item {
   padding: 20px;
   border: 1px solid #e5e7eb;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-  background-color: #f8e5cf;
+  background-color: #f8e5cf; /* Light beige to match GIF tones */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 /* Background Colors in 3x3 Pattern */
-.qm-question-item:nth-child(3n+1) {
-  background-color: #f7dfb6;
+.question-item:nth-child(3n+1) {
+  background-color: #f7dfb6; /* Soft beige-yellow */
 }
 
-.qm-question-item:nth-child(3n+2) {
-  background-color: #cde8e5;
+.question-item:nth-child(3n+2) {
+  background-color: #cde8e5; /* Soft mint green */
 }
 
-.qm-question-item:nth-child(3n+3) {
-  background-color: #e7dff2;
+.question-item:nth-child(3n+3) {
+  background-color: #e7dff2; /* Soft lavender */
 }
 
 /* Text Styling with adjusted spacing */
-.qm-question-item h4 {
+.question-item h4 {
   font-size: 16px;
   color: #444;
   margin: 8px 0 4px;
 }
 
-.qm-question-item .qm-question-text {
+.question-item .question-text {
   font-size: 14px;
   color: #555;
   text-align: center;
@@ -131,36 +134,59 @@
   margin-bottom: 10px;
 }
 
-/* Adjusted spacing and styling for "Type" and "ID" information */
-.qm-question-item p {
+/* Adjusted spacing for "Type" and "ID" information */
+.question-item .type-id {
   font-size: 12px;
   color: #000000;
   margin: 2px 0;
-  font-weight: 400;
+  font-weight: 300; /* Light font weight */
 }
 
-/* Adjusted position and styling for Edit button */
-.qm-question-item button {
+/* Button Group for spacing */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Added spacing between buttons */
+}
+
+/* Adjusted position and styling for Edit and Delete buttons */
+.edit-button {
   margin-top: 12px;
   padding: 8px 12px;
   font-size: 14px;
   cursor: pointer;
   border: none;
-  background-color: #0077b6;
+  background-color: #0077b6; /* Edit button background color */
   color: #ffffff;
   border-radius: 4px;
   transition: background-color 0.3s;
 }
 
-.qm-question-item button:hover {
-  background-color: #005f8a;
+.edit-button:hover {
+  background-color: #005f8a; /* Edit button hover color */
+}
+
+.delete-button {
+  margin-top: 12px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  background-color: #dc3545; /* Delete button background color */
+  color: #ffffff;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #c82333; /* Delete button hover color */
 }
 
 /* Start Presentation Button */
-.qm-start-presentation-btn {
+.start-presentation-btn {
   margin-top: 20px;
   padding: 12px 24px;
-  background-color: #28a745;
+  background-color: #28a745; /* Start button background color */
   color: #ffffff;
   border: none;
   border-radius: 6px;
@@ -170,8 +196,8 @@
   transition: background-color 0.3s;
 }
 
-.qm-start-presentation-btn:hover {
-  background-color: #218838;
+.start-presentation-btn:hover {
+  background-color: #218838; /* Start button hover color */
 }
 
 /* Disabled Button State */
@@ -182,31 +208,31 @@ button:disabled {
 
 /* Mobile and Tablet Responsiveness */
 @media (max-width: 768px) {
-  .qm-question-manager {
+  .question-manager {
     padding: 15px;
   }
-  .qm-question-form input,
-  .qm-question-form select,
-  .qm-question-form button {
+  .question-form input,
+  .question-form select,
+  .question-form button {
     width: 100%;
     max-width: none;
   }
-  .qm-questions-grid {
+  .questions-grid {
     grid-template-columns: 1fr;
   }
-  .qm-start-presentation-btn {
+  .start-presentation-btn {
     width: 100%;
   }
 }
 
 /* Pagination Controls */
-.qm-pagination {
+.pagination {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-.qm-pagination button {
+.pagination button {
   padding: 5px 10px;
   margin: 0 5px;
   border: none;
@@ -216,12 +242,12 @@ button:disabled {
   transition: background-color 0.3s;
 }
 
-.qm-pagination button.active {
+.pagination button.active {
   background-color: #0077b6;
   color: #ffffff;
 }
 
-.qm-pagination button:hover:not(.active) {
+.pagination button:hover:not(.active) {
   background-color: #005f8a;
   color: #ffffff;
 }
