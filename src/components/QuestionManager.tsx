@@ -1,7 +1,7 @@
-// src/components/QuestionManager.tsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addQuestion, getQuestions, updateQuestion } from '../firebase/firebaseService';
+import mudduGif from '../assets/gif/muddu.gif';
 import './QuestionManager.css';
 
 interface Question {
@@ -16,6 +16,9 @@ const QuestionManager: React.FC = () => {
   const [questionType, setQuestionType] = useState<'wordCloud' | 'scaleMeter'>('wordCloud');
   const [isAdding, setIsAdding] = useState(false);
   const [editQuestionId, setEditQuestionId] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isFading, setIsFading] = useState(false); // For fade animation
+  const itemsPerPage = 6;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -66,11 +69,29 @@ const QuestionManager: React.FC = () => {
     }
   };
 
+  const paginatedQuestions = questions.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const totalPages = Math.ceil(questions.length / itemsPerPage);
+
+  const changePage = (pageNumber: number) => {
+    setIsFading(true); // Start fade-out effect
+    setTimeout(() => {
+      setCurrentPage(pageNumber); // Change the page after fade-out
+      setIsFading(false); // Start fade-in effect
+    }, 500); // Wait for the fade-out to complete
+  };
+
   return (
-    <div className="full-page-container">
-      <div className="question-manager">
+    <div className="qm-full-page-container">
+      <div className="qm-gif-container">
+        <img src={mudduGif} alt="Ami Fat Cat GIF" />
+      </div>
+      <div className="qm-question-manager">
         <h2>Question Manager</h2>
-        <div className="question-form">
+        <div className="qm-question-form">
           <input
             type="text"
             placeholder="Enter your question"
@@ -89,26 +110,42 @@ const QuestionManager: React.FC = () => {
           </button>
         </div>
 
-        {questions.length > 0 && (
-          <div className="questions-grid">
-            {questions.map((question) => (
+        {paginatedQuestions.length > 0 && (
+          <div className={`qm-questions-grid ${isFading ? 'qm-fade-out' : ''}`}>
+            {paginatedQuestions.map((question, index) => (
               <div
                 key={question.id}
-                className="question-item"
-                style={{ backgroundColor: question.type === 'wordCloud' ? '#fce5cd' : '#d0e0e3' }}
+                className="qm-question-item"
+                style={{
+                  backgroundColor: question.type === 'wordCloud' ? '#fce5cd' : '#d0e0e3',
+                }}
               >
-                <h4>{question.text}</h4>
-                <p style={{ fontWeight: 'normal', textAlign: 'center' }}>Type: {question.type}</p>
-                <p style={{ fontWeight: 'normal', textAlign: 'center' }}>ID: {question.id}</p>
+                <h4>Question {index + 1 + (currentPage - 1) * itemsPerPage}:</h4>
+                <p className="qm-question-text">{question.text}</p>
+                <p>Type: {question.type === 'wordCloud' ? 'Word Cloud' : 'Scale Meter'}</p>
+                <p>ID: {question.id}</p>
                 <button onClick={() => handleEditQuestion(question)}>Edit</button>
               </div>
             ))}
           </div>
         )}
 
+        {/* Pagination Controls */}
+        <div className="qm-pagination">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i + 1}
+              className={i + 1 === currentPage ? 'active' : ''}
+              onClick={() => changePage(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+
         <button
           onClick={handleStartPresentation}
-          className="start-presentation-btn"
+          className="qm-start-presentation-btn"
           disabled={questions.length === 0}
         >
           Start Presentation
