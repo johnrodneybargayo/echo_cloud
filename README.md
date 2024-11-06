@@ -61,6 +61,45 @@ VerbiVibe is a responsive web application designed for real-time word clouds and
 - **CSS**: Styling and layout management.
 - **Responsive Design**: Ensures usability across various devices.
 
+## Changelog
+
+### 2024-10-31
+- Updated question manager layout to improve user experience.
+
+### 2024-10-30
+- Added question manager page to allow users to add, edit, and delete questions.
+
+### 2024-10-20
+- Adjusted word count display for better clarity and layout.
+- Updated happiness level UI for improved responsiveness.
+
+### 2024-10-19
+- Enhanced mobile responsiveness on happiness scale components.
+- Modified background colors for word cloud to improve visual appeal.
+
+### 2024-10-18
+- Adjusted text and background colors to align with accessibility standards.
+- Changed project name to VerbiVibe.
+
+### 2024-10-15
+- Added logos on various pages.
+- Updated scale values for happiness input.
+
+### 2024-10-14
+- Added end-game button for quick navigation to the thank you page.
+- Created admin page with options to reset the word cloud and other data.
+
+### 2024-10-13
+- Enhanced background color and added animations to word cloud elements.
+
+### 2024-10-12
+- Modified favicon for a better visual experience.
+- Updated homepage layout and added QR code for easy access.
+
+### 2024-10-10
+- Fixed Firebase connection settings for enhanced data stability.
+- Initial commits and setup for VerbiVibe project.
+
 ## Contributing
 
 1. Fork the repository.
