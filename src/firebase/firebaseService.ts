@@ -95,3 +95,15 @@ export const deleteQuestion = async (questionId: string): Promise<void> => {
     throw new Error('Failed to delete question');
   }
 };
+
+// Update a question by ID in the Realtime Database
+export const updateQuestion = async (questionId: string, updatedData: Partial<Question>): Promise<void> => {
+  try {
+    const questionRef = ref(db, `questions/${questionId}`);
+    await update(questionRef, updatedData);
+    console.log(`Updated question with ID ${questionId}`);
+  } catch (error) {
+    console.error('Error updating question:', error);
+    throw new Error('Failed to update question');
+  }
+};

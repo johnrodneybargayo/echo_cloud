@@ -1,54 +1,167 @@
-/* src/components/QuestionManager.css */
+/* Full Page Container for Centering */
+.full-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #e8eef2; /* Slightly darker light blue-gray */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Question Manager Styling */
 .question-manager {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  color: #333333;
+  margin: 0 auto;
+}
+
+/* Form Styling */
+.question-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.question-form input,
+.question-form select {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 15px;
+  width: 100%;
+  max-width: 250px;
+  background-color: #f7f9fc;
+}
+
+.question-form button {
+  padding: 12px 20px;
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.question-form button:hover {
+  background-color: #005f8a;
+}
+
+/* Questions Grid */
+.questions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Question Item Styling */
+.question-item {
+  padding: 15px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fdfcfa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+/* Different background colors for each card in a 3x3 pattern */
+.question-item:nth-child(3n+1) {
+  background-color: #fef3c7; /* Soft yellow */
+}
+
+.question-item:nth-child(3n+2) {
+  background-color: #c7f3ef; /* Soft teal */
+}
+
+.question-item:nth-child(3n+3) {
+  background-color: #d5c7f3; /* Soft purple */
+}
+
+/* Text Styling */
+.question-item h4 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.question-item p {
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+  font-weight: normal;
+}
+
+/* Edit Button Styling */
+.question-item button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  background-color: #0077b6;
+  color: white;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.question-item button:hover {
+  background-color: #005f8a;
+}
+
+/* Start Presentation Button */
+.start-presentation-btn {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.start-presentation-btn:hover {
+  background-color: #218838;
+}
+
+/* Disabled Button State */
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Mobile and Tablet Responsiveness */
+@media (max-width: 768px) {
+  .question-manager {
+    padding: 15px;
   }
-  
-  .question-form {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
   .question-form input,
-  .question-form select {
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
+  .question-form select,
   .question-form button {
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    width: 100%;
+    max-width: none;
   }
-  
-  .questions-list .question-item {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f9f9f9;
+  .questions-grid {
+    grid-template-columns: 1fr;
   }
-  
-  .question-item h3 {
-    margin: 0 0 10px;
-  }
-  
   .start-presentation-btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    width: 100%;
   }
-  
+}
