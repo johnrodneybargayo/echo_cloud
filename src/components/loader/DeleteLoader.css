@@ -1,0 +1,93 @@
+/* src/components/loader/DeleteLoader.css */
+
+.loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Dark background for overlay */
+    display: flex; /* Use flexbox to center the loader */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    z-index: 1000; /* Ensure it's on top of everything */
+}
+
+.delete-loader {
+    position: relative;
+    background: #ff3d00; /* Loader background color */
+    width: 100px;
+    height: 40px;
+    line-height: 28px; /* Adjusted line height for better centering */
+    text-align: center;
+    color: #931010;
+    font-weight: bold; /* Make font bold */
+    letter-spacing: 0.5px;
+    font-size: 16px; /* Slightly larger font size */
+    box-sizing: border-box;
+    border: 5px groove #de3500;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 5px 7px #0002;
+}
+
+.delete-loader:before {
+    content: "";
+    width: 90px;
+    height: 100px;
+    background: #fff; /* Background for the loader paper */
+    box-shadow: 0 0 10px #0003;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(100% + 8px);
+    animation: loadPaper 4s ease-in infinite;
+}
+
+.delete-loader:after {
+    content: "";
+    width: 90px;
+    height: 100px;
+    background: linear-gradient(to right, #fff 50%, #0000 51%);
+    background-size: 9px 100px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: calc(100% + 8px);
+    animation: disposePaper 4s ease-in infinite;
+}
+
+/* Keyframes for animations */
+@keyframes loadPaper {
+    0%,
+    10% {
+        height: 100px;
+        bottom: calc(100% + 40px);
+    }
+    50% {
+        height: 100px;
+        bottom: calc(100% + 8px);
+    }
+    75%,
+    100% {
+        height: 0px;
+        bottom: calc(100% + 8px);
+    }
+}
+
+@keyframes disposePaper {
+    0%,
+    50% {
+        height: 0px;
+        top: calc(100% + 8px);
+    }
+    75% {
+        height: 100px;
+        top: calc(100% + 8px);
+        opacity: 1;
+    }
+    100% {
+        height: 100px;
+        top: calc(100% + 40px);
+        opacity: 0;
+    }
+}

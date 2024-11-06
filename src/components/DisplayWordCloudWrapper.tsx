@@ -3,6 +3,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import WordCloudComponent from '../components/WordCloud';
 import { useWords } from '../hooks/useWords';
 import { Question } from '../types/question';
+import Loader from '../components/loader/Loader'; // Import the Loader component
 
 const DisplayWordCloudWrapper: React.FC = () => {
   const { questionId } = useParams<{ questionId: string }>();
@@ -13,17 +14,20 @@ const DisplayWordCloudWrapper: React.FC = () => {
     questions.findIndex(q => q.id === questionId) || 0
   );
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
+  // Remove loading state from this component
   return (
-    <WordCloudComponent
-      words={words}
-      questions={questions}
-      currentQuestionIndex={currentQuestionIndex}
-      setCurrentQuestionIndex={setCurrentQuestionIndex}
-    />
+    <>
+      {loading ? (
+        <Loader /> // Display loader while loading
+      ) : (
+        <WordCloudComponent
+          words={words}
+          questions={questions}
+          currentQuestionIndex={currentQuestionIndex}
+          setCurrentQuestionIndex={setCurrentQuestionIndex}
+        />
+      )}
+    </>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addQuestion, getQuestions, updateQuestion, deleteQuestion } from '../firebase/firebaseService';
 import mudduGif from '../assets/gif/muddu.gif';
+import DeleteLoader from './loader/DeleteLoader'; // Import the DeleteLoader component
 import './QuestionManager.css';
 
 interface Question {
@@ -18,6 +19,7 @@ const QuestionManager: React.FC = () => {
   const [editQuestionId, setEditQuestionId] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [isFading, setIsFading] = useState(false); // For fade animation
+  const [isDeleting, setIsDeleting] = useState(false); // New state for delete loading
   const itemsPerPage = 6;
   const navigate = useNavigate();
 
@@ -62,12 +64,17 @@ const QuestionManager: React.FC = () => {
 
   const handleDeleteQuestion = async (questionId: string) => {
     if (window.confirm("Are you sure you want to delete this question?")) {
+      setIsDeleting(true); // Start loader
       try {
         await deleteQuestion(questionId);
         const updatedQuestions = questions.filter((question) => question.id !== questionId);
         setQuestions(updatedQuestions);
       } catch (error) {
         console.error('Failed to delete question:', error);
+      } finally {
+        setTimeout(() => {
+          setIsDeleting(false); // Stop loader after delay
+        }, 3000); // 3 seconds delay for the demonstration
       }
     }
   };
@@ -121,6 +128,8 @@ const QuestionManager: React.FC = () => {
             {isAdding ? 'Processing...' : editQuestionId ? 'Update Question' : 'Add Question'}
           </button>
         </div>
+
+        {isDeleting && <DeleteLoader />} {/* Show delete loader if deleting */}
 
         {paginatedQuestions.length > 0 && (
           <div className={`questions-grid ${isFading ? 'fade-out' : ''}`}>

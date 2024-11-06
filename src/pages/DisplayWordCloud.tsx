@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import WordCloudComponent from '../components/WordCloud';
 import { useWords } from '../hooks/useWords';
 import { useQuestions } from '../context/QuestionsContext';
+import Loader from '../components/loader/Loader'; // Import the Loader component
 
 const DisplayWordCloud: React.FC = () => {
   const { questionId } = useParams<{ questionId: string }>(); // Get questionId from URL parameters
@@ -13,7 +14,7 @@ const DisplayWordCloud: React.FC = () => {
   );
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />; // Show the loader while data is loading
   }
 
   return (

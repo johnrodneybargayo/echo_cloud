@@ -7,7 +7,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="home-container">
-      <h1>Welcome to Echo Cloud</h1>
+      <h1>Welcome to VerbiVibe</h1>
       <div className="qr-code-container">
         <img src={qrCodeUrl} alt="QR Code" className="qr-code" />
       </div>

@@ -14,7 +14,7 @@ const WordInput: React.FC = () => {
   const location = useLocation();
   const { questionId } = useParams<{ questionId: string }>();
   const questions: Question[] = location.state?.questions || [];
-  const { submitWord } = useWords(questionId || ''); // Pass questionId here
+  const { submitWord } = useWords(questionId || '');
   const { canSubmit, timeLeft } = useSubmissionCooldown('lastSubmissionTime');
   const [inputText, setInputText] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
