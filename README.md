@@ -1,3 +1,5 @@
+![VerbiVibe](https://github.com/user-attachments/assets/d8ea19e1-c949-4e48-b88b-17712eb940bc)
+
 # VerbiVibe
 
 VerbiVibe is a responsive web application designed for real-time word clouds and interactive happiness scale visualizations. It enables users to submit words that dynamically build a word cloud, as well as participate in happiness level surveys. This application is optimized for desktop, tablet, and mobile displays.
