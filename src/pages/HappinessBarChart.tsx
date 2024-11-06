@@ -4,7 +4,7 @@ import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import { useNavigate } from 'react-router-dom';
 import './HappinessBarChart.css';
-import logo from '../assets/lcc_logo.png';
+import logo from '../assets/verbivibe_logo.png';
 
 Chart.register(...registerables);
 

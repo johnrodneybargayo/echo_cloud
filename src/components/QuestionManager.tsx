@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { addQuestion, getQuestions, updateQuestion, deleteQuestion } from '../firebase/firebaseService';
 import mudduGif from '../assets/gif/muddu.gif';
 import DeleteLoader from './loader/DeleteLoader'; // Import the DeleteLoader component
+import verbivibeLogo from '../assets/verbivibe_logo.png';
 import './QuestionManager.css';
 
 interface Question {
@@ -105,6 +106,9 @@ const QuestionManager: React.FC = () => {
 
   return (
     <div className="full-page-container">
+      <div className="logo-container">
+        <img src={verbivibeLogo} alt="VerbiVibe Logo" className="verbivibe-logo" /> {/* VerbiVibe Logo */}
+      </div>
       <div className="gif-container">
         <img src={mudduGif} alt="Ami Fat Cat GIF" />
       </div>

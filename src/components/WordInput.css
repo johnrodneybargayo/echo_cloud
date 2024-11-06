@@ -26,7 +26,7 @@
 .word-input-logo {
   width: 100px;
   height: 100px;
-  background-image: url('../assets/lcc_logo.png'); /* Scoped to this page */
+  background-image: url('../assets/verbivibe_logo.png'); /* Scoped to this page */
   background-size: cover;
   background-position: center;
   border-radius: 0.75rem;

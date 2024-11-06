@@ -182,6 +182,17 @@
   background-color: #c82333; /* Delete button hover color */
 }
 
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.verbivibe-logo {
+  max-width: 150px; /* Adjust the size as needed */
+}
+
+
 /* Start Presentation Button */
 .start-presentation-btn {
   margin-top: 20px;
