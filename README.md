@@ -1,4 +1,6 @@
-![VerbiVibe](https://github.com/user-attachments/assets/d8ea19e1-c949-4e48-b88b-17712eb940bc)
+<div style="display: flex; justify-content: center; align-items: center;">
+  <img src="https://github.com/user-attachments/assets/d8ea19e1-c949-4e48-b88b-17712eb940bc" alt="VerbiVibe" />
+</div>
 
 # VerbiVibe
 
