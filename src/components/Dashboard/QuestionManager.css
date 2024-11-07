@@ -2,7 +2,7 @@
 .full-page-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* Align items at the start for better layout */
   min-height: 100vh;
   background-color: #f5fcfa;
   padding: 20px;
@@ -11,11 +11,11 @@
 }
 
 /* GIF Container - Positioned to align nicely */
-.gif-container {
+.gif-container img {
   position: absolute;
   bottom: 20px;
-  left: 20px;
-  width: 100px;
+  left: 320px; /* Adjust left position to your preference */
+  width: 120px;
   height: auto;
   z-index: 1000;
 }
@@ -28,12 +28,10 @@
 }
 
 .question-manager {
-  max-width: 800px;
+  max-width: 1000px; /* Increased width for the question manager */
   width: 100%;
-  background-color: #ffffff;
+  background-color: #f8f9fa;
   padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   color: #333333;
   text-align: center;
   margin: 0 auto;
@@ -55,7 +53,7 @@
   border: 1px solid #d1d5db;
   font-size: 15px;
   width: 100%;
-  max-width: 250px;
+  max-width: 300px; /* Adjust max-width for wider input fields */
   background-color: #f7f9fc;
 }
 
@@ -181,17 +179,6 @@
 .delete-button:hover {
   background-color: #c82333; /* Delete button hover color */
 }
-
-.logo-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.verbivibe-logo {
-  max-width: 150px; /* Adjust the size as needed */
-}
-
 
 /* Start Presentation Button */
 .start-presentation-btn {

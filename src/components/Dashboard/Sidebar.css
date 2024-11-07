@@ -1,0 +1,36 @@
+/* src/components/Dashboard/Sidebar.css */
+
+.sidebar {
+    width: 250px; /* Fixed width for sidebar */
+    background-color: #ff9838; /* Sidebar background color */
+    padding: 1rem; /* Padding inside the sidebar */
+    border-radius: 8px; /* Rounded corners for sidebar */
+}
+
+.sidebar-title {
+    font-size: 1.5rem; /* Font size for the title */
+    font-weight: bold; /* Bold text for title */
+    color: white; /* White text color for title */
+    margin-bottom: 1rem; /* Space below the title */
+}
+
+.sidebar-button {
+    width: 100%; /* Full width for buttons */
+    padding: 1rem; /* Button padding */
+    background-color: transparent; /* Transparent background for buttons */
+    color: white; /* Text color */
+    font-weight: bold; /* Bold text */
+    border: none; /* No border */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 1rem; /* Space between buttons */
+    text-align: left; /* Align text to the left */
+    transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+.sidebar-button.active {
+    background-color: #d96666; /* Color for active button */
+}
+
+.sidebar-button:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light hover effect */
+}

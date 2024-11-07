@@ -13,6 +13,9 @@ VerbiVibe is a responsive web application designed for real-time word clouds and
 - **Admin Panel**: Manage questions, reset the word cloud, and view submission statistics.
 - **Question Manager**: Add, edit, and delete questions with an easy-to-use interface, organized in a 3x3 grid layout.
 - **Mobile-Friendly Design**: Fully responsive layout across desktop, tablet, and mobile devices.
+- **User Authentication**: Google authentication allows users to log in, and their roles are automatically assigned (admin or participant).
+- **Role Management**: Admin users can assign roles to users after authentication.
+- **Database Reset**: Admin users can reset the word cloud and database data from the admin panel.
 
 ## Installation
 
@@ -66,6 +69,14 @@ VerbiVibe is a responsive web application designed for real-time word clouds and
 - **Responsive Design**: Ensures usability across various devices.
 
 ## Changelog
+
+### 2024-11-08
+- **Added User Authentication**: Integrated Google authentication allowing users to log in with their Google accounts.
+- **Role Management**: Admin users can now assign roles (admin, participant) to users upon login.
+- **Admin Panel Features**: Admins can now manage roles, reset the word cloud, and view submission statistics.
+- **Database Clear Functionality**: Added an option for admins to clear/reset the Firebase database through the admin panel.
+- **Loader State**: Introduced a loading spinner during data fetching or database reset operations to improve user experience.
+- **User Display Name Fix**: Ensured that the user’s full name from the Firebase database (`displayName`) is correctly displayed instead of a fallback 'User' name.
 
 ### 2024-10-31
 - Updated question manager layout to improve user experience.

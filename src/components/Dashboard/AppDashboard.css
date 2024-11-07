@@ -1,0 +1,58 @@
+/* src/components/Dashboard/AdminSettings.css */
+
+.admin-settings {
+    background-color: white; /* Background color for the settings container */
+    padding: 2rem; /* Padding for the container */
+    border-radius: 12px; /* Rounded corners */
+    text-align: center; /* Center text */
+    max-width: 600px; /* Max width of the container */
+    margin: 2rem auto; /* Center the container horizontally */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  .admin-header {
+    font-size: 1.75rem; /* Increased font size for header */
+    font-weight: bold; /* Bold text */
+    color: #333; /* Dark gray color for the header */
+    margin-bottom: 1.5rem; /* Space below the header */
+  }
+  
+  .admin-actions {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 1.5rem; /* Increased space between buttons */
+  }
+  
+  .admin-action-button {
+    background-color: #ff9838; /* Button background color */
+    color: white; /* Text color */
+    font-size: 1.1rem; /* Increased font size for button text */
+    font-weight: bold; /* Bold text for buttons */
+    padding: 0.75rem; /* Padding for buttons */
+    border: none; /* Remove border */
+    border-radius: 8px; /* Rounded corners for buttons */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+  }
+  
+  /* Hover effect for buttons */
+  .admin-action-button:hover {
+    background-color: #e07b2d; /* Darker color on hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+  }
+  
+  /* Responsive design adjustments */
+  @media (max-width: 768px) {
+    .admin-settings {
+      padding: 1.5rem; /* Reduced padding on smaller screens */
+    }
+  
+    .admin-header {
+      font-size: 1.5rem; /* Smaller font size on mobile */
+    }
+  
+    .admin-action-button {
+      font-size: 1rem; /* Smaller font size for buttons on mobile */
+    }
+  }
+  

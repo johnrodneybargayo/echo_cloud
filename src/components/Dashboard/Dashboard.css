@@ -1,0 +1,109 @@
+/* src/components/Dashboard/Dashboard.css */
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #2a3990; /* Background color for the dashboard */
+    color: #ffffff; /* Default text color */
+}
+
+.top-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #2a3990; /* Keep the same background color */
+}
+
+.dashboard-container {
+    display: flex;
+    flex: 1;
+    padding-top: 0;
+    padding-right: 2rem;
+    padding-left: 2rem;
+}
+
+.sidebar {
+    width: 250px; /* Fixed width for the sidebar */
+    border-radius: 8px; /* Rounded corners for sidebar */
+    height: calc(100vh - 70px); /* Adjust height based on top navigation */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+}
+
+.sidebar-title {
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 1rem;
+    margin-top: -4px;
+    text-align: left;
+}
+
+.sidebar-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: #ff9838;
+    padding: 20px;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.sidebar-button {
+    width: 100%; /* Full width for buttons */
+    padding: 1rem; /* Button padding */
+    background-color: rgba(255, 255, 255, 0.2); /* Background color for buttons */
+    color: white; /* Text color */
+    font-weight: bold; /* Bold text */
+    border: none; /* No border */
+    border-radius: 8px; /* Rounded corners */
+    text-align: left; /* Align text to the left */
+    transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+.sidebar-button.active {
+    background-color: #d96666; /* Color for active button */
+}
+
+.sidebar-button:hover {
+    background-color: rgba(255, 255, 255, 0.4); /* Hover effect for buttons */
+}
+
+.dashboard-content {
+    flex: 1; /* Take remaining space */
+    padding: 2rem; /* Padding inside the content area */
+    background-color: #f8f9fa; /* White background for content */
+    border-radius: 12px; /* Rounded corners for content */
+    margin: 0 1rem; /* Adjusted margins for spacing */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.dashboard-title {
+    font-size: 2rem; /* Font size for the title */
+    font-weight: bold; /* Bold weight */
+    margin-bottom: 1rem; /* Space below the title */
+    text-align: left; /* Align left */
+}
+
+.admin-settings, .question-manager {
+    max-width: 70rem; /* Limit width for admin settings and question manager */
+    margin: auto; /* Center these components */
+}
+
+.admin-action-button {
+    background-color: #ff9838; /* Background for action buttons */
+    color: white; /* Text color */
+    font-size: 1rem; /* Font size */
+    font-weight: bold; /* Bold text */
+    padding: 0.75rem; /* Button padding */
+    border: none; /* No border */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Pointer on hover */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.admin-action-button:hover {
+    background-color: #e07b2d; /* Darker color on hover */
+}

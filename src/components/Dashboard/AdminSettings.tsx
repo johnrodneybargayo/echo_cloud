@@ -1,10 +1,11 @@
+// src/components/Dashboard/AdminSettings.tsx
 import React, { useState } from 'react';
 import { getDatabase, ref, remove } from 'firebase/database';
-import './AdminPage.css'; // Optional: CSS for styling the admin page
-import DeleteLoader from '../components/loader/DeleteLoader'; // Import the DeleteLoader component
+import DeleteLoader from '../loader/DeleteLoader'; // Ensure correct path to the DeleteLoader component
+import './AdminSettings.css'; // Import your CSS for styling
 
-const AdminPage: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false); // State for the loader
+const AdminSettings: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(false); // State for loader
   const [successMessage, setSuccessMessage] = useState<string | null>(null); // State for success message
 
   const clearWordsInDatabase = async () => {
@@ -15,11 +16,10 @@ const AdminPage: React.FC = () => {
 
     try {
       await remove(wordsRef);
-      // Wait for 10 seconds before showing the success message
       setTimeout(() => {
         setSuccessMessage('Words cleared from the database.');
         setIsLoading(false); // Stop loader after delay
-      }, 8000); // 8 seconds
+      }, 2000); // 2 seconds for simulation
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       alert('Failed to clear words: ' + errorMessage);
@@ -38,7 +38,7 @@ const AdminPage: React.FC = () => {
       setTimeout(() => {
         setSuccessMessage('Happiness levels cleared from the database.');
         setIsLoading(false); // Stop loader after delay
-      }, 10000); // 10 seconds
+      }, 2000); // 2 seconds for simulation
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       alert('Failed to clear happiness levels: ' + errorMessage);
@@ -57,7 +57,7 @@ const AdminPage: React.FC = () => {
       setTimeout(() => {
         setSuccessMessage('Questions cleared from the database.');
         setIsLoading(false); // Stop loader after delay
-      }, 10000); // 10 seconds
+      }, 2000); // 2 seconds for simulation
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       alert('Failed to clear questions: ' + errorMessage);
@@ -66,32 +66,23 @@ const AdminPage: React.FC = () => {
   };
 
   return (
-    <div className="admin-container">
+    <>
       {isLoading && <DeleteLoader />} {/* Show loader if loading */}
-
-      <h1>Admin Page</h1>
-      <p>This is the admin page where you can manage the Firebase data.</p>
-
-      <div className="button-container">
-        {/* Button to clear words */}
-        <button className="clear-btn" onClick={clearWordsInDatabase}>
+      <h1 className="admin-header">THIS IS THE ADMIN PAGE WHERE YOU CAN MANAGE THE FIREBASE DATA.</h1>
+      <div className="admin-actions">
+        <button className="admin-action-button" onClick={clearWordsInDatabase}>
           Clear Words from Firebase
         </button>
-
-        {/* Button to clear happiness levels */}
-        <button className="clear-btn" onClick={clearHappinessLevelsInDatabase}>
+        <button className="admin-action-button" onClick={clearHappinessLevelsInDatabase}>
           Clear Happiness Levels from Firebase
         </button>
-
-        {/* Button to clear questions */}
-        <button className="clear-btn" onClick={clearQuestionsInDatabase}>
+        <button className="admin-action-button" onClick={clearQuestionsInDatabase}>
           Clear Questions from Firebase
         </button>
       </div>
-
       {successMessage && <p className="success-message">{successMessage}</p>} {/* Display success message */}
-    </div>
+    </>
   );
 };
 
-export default AdminPage;
+export default AdminSettings;

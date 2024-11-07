@@ -1,0 +1,47 @@
+/* src/components/Dashboard/AdminSettings.css */
+
+.admin-header {
+    font-size: 1.5rem; /* Font size of the header */
+    font-weight: bold; /* Bold text */
+    color: black; /* Change text color to black */
+    margin-bottom: 2rem; /* Space below the header */
+}
+
+.admin-actions {
+    display: flex; /* Use flexbox for layout */
+    flex-wrap: wrap; /* Allow wrapping for mobile/tablet */
+    gap: 1rem; /* Space between buttons */
+    justify-content: center; /* Center buttons on small screens */
+}
+
+.admin-action-button {
+    background-color: #ff9838; /* Button background color */
+    color: white; /* Text color */
+    font-size: 1rem; /* Font size of button text */
+    font-weight: bold; /* Bold text */
+    padding: 0.75rem; /* Padding for buttons */
+    border: none; /* Remove border */
+    border-radius: 8px; /* Rounded corners for buttons */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+    text-align: center; /* Center text in button */
+    flex: 1 1 100%; /* Default to full width for mobile */
+}
+
+/* Media query for tablets and larger screens */
+@media (min-width: 600px) {
+    .admin-action-button {
+        flex: 1 1 calc(33.333% - 1rem); /* Three columns on larger screens, subtracting the gap */
+    }
+}
+
+/* Media query for larger desktops */
+@media (min-width: 1024px) {
+    .admin-action-button {
+        flex: 1 1 calc(33.333% - 1rem); /* Maintain three columns */
+    }
+}
+
+.admin-action-button:hover {
+    background-color: #e07b2d; /* Darker color on hover */
+}
