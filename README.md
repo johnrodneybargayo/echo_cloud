@@ -70,6 +70,12 @@ VerbiVibe is a responsive web application designed for real-time word clouds and
 
 ## Changelog
 
+### 2024-11-15
+- **Route Addition**: Added `/happiness-bar-chart/:questionId` route for better navigation to specific question data.
+- **HappinessInput Update**: Adjusted `HappinessInput` to support navigation to `/happiness-bar-chart/:questionId` route for enhanced dynamic routing.
+- **Error Handling**: Improved routing logic for handling unmatched routes to ensure correct page display based on question types.
+- **TypeScript Improvements**: Resolved type-checking issues with question type comparisons, improving stability.
+
 ### 2024-11-08
 - **Added User Authentication**: Integrated Google authentication allowing users to log in with their Google accounts.
 - **Role Management**: Admin users can now assign roles (admin, participant) to users upon login.
