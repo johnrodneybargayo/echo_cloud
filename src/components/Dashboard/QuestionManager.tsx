@@ -1,32 +1,25 @@
-// src/components/Dashboard/QuestionManager.tsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addQuestion, getQuestions, updateQuestion, deleteQuestion } from '../../firebase/firebaseService';
-import mudduGif from '../../assets/gif/muddu.gif';
 import DeleteLoader from '../loader/DeleteLoader';
+import { Question } from '../../types/question';
 import './QuestionManager.css';
-
-interface Question {
-  id: string;
-  text: string;
-  type: 'wordCloud' | 'scaleMeter';
-}
 
 const QuestionManager: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [newQuestion, setNewQuestion] = useState<string>('');
-  const [questionType, setQuestionType] = useState<'wordCloud' | 'scaleMeter'>('wordCloud');
+  const [questionType, setQuestionType] = useState<Question['type']>('wordCloud');
   const [isAdding, setIsAdding] = useState(false);
   const [editQuestionId, setEditQuestionId] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isFading, setIsFading] = useState(false); // For fade animation
-  const [isDeleting, setIsDeleting] = useState(false); // New state for delete loading
+  const [isFading, setIsFading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const itemsPerPage = 6;
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      const fetchedQuestions = await getQuestions();
+      const fetchedQuestions: Question[] = await getQuestions();
       setQuestions(fetchedQuestions);
     };
     fetchQuestions();
@@ -47,7 +40,7 @@ const QuestionManager: React.FC = () => {
       } else {
         await addQuestion(questionData);
       }
-      const updatedQuestions = await getQuestions();
+      const updatedQuestions: Question[] = await getQuestions();
       setQuestions(updatedQuestions);
       setNewQuestion('');
       setEditQuestionId(null);
@@ -65,23 +58,23 @@ const QuestionManager: React.FC = () => {
 
   const handleDeleteQuestion = async (questionId: string) => {
     if (window.confirm("Are you sure you want to delete this question?")) {
-      setIsDeleting(true); // Start loader
+      setIsDeleting(true);
       try {
         await deleteQuestion(questionId);
-        const updatedQuestions = questions.filter((question) => question.id !== questionId);
-        setQuestions(updatedQuestions);
+        setQuestions(prevQuestions => prevQuestions.filter((question) => question.id !== questionId));
       } catch (error) {
         console.error('Failed to delete question:', error);
       } finally {
-        setIsDeleting(false); // Stop loader
+        setTimeout(() => {
+          setIsDeleting(false);
+        }, 3000);
       }
     }
   };
 
   const handleStartPresentation = () => {
     if (questions.length > 0) {
-      const firstQuestionId = questions[0].id;
-      navigate(`/enter/${firstQuestionId}`, { state: { questions } });
+      navigate(`/enter/${questions[0].id}`, { state: { questions } });
     } else {
       alert('Please add at least one question before starting the presentation.');
     }
@@ -95,20 +88,23 @@ const QuestionManager: React.FC = () => {
   const totalPages = Math.ceil(questions.length / itemsPerPage);
 
   const changePage = (pageNumber: number) => {
-    setIsFading(true); // Start fade-out effect
+    setIsFading(true);
     setTimeout(() => {
-      setCurrentPage(pageNumber); // Change the page after fade-out
-      setIsFading(false); // Start fade-in effect
-    }, 500); // Wait for the fade-out to complete
+      setCurrentPage(pageNumber);
+      setIsFading(false);
+    }, 500);
+  };
+  const getDisplayText = (question: Question) => {
+    if (question.type === 'happinessInput' && question.linkedHappinessScale) {
+      return `Happiness Bar Chart (linked to Happiness Scale)`;
+    }
+    return question.text;
   };
 
   return (
-    <div className="dashboard-container">
-      <div className="gif-container">
-        <img src={mudduGif} alt="Ami Fat Cat GIF" />
-      </div>
+    <div className="full-page-container">
       <div className="question-manager">
-        <h2 className="question-manager-header">Question Manager</h2>
+        <h2>Question Manager</h2>
         <div className="question-form">
           <input
             type="text"
@@ -118,17 +114,17 @@ const QuestionManager: React.FC = () => {
           />
           <select
             value={questionType}
-            onChange={(e) => setQuestionType(e.target.value as 'wordCloud' | 'scaleMeter')}
+            onChange={(e) => setQuestionType(e.target.value as Question['type'])}
           >
             <option value="wordCloud">Word Cloud</option>
-            <option value="scaleMeter">Scale Meter</option>
+            <option value="happinessInput">Happiness Scale</option>
           </select>
           <button onClick={handleAddOrUpdateQuestion} disabled={isAdding}>
             {isAdding ? 'Processing...' : editQuestionId ? 'Update Question' : 'Add Question'}
           </button>
         </div>
 
-        {isDeleting && <DeleteLoader />} {/* Show delete loader if deleting */}
+        {isDeleting && <DeleteLoader />}
 
         {paginatedQuestions.length > 0 && (
           <div className={`questions-grid ${isFading ? 'fade-out' : ''}`}>
@@ -141,9 +137,12 @@ const QuestionManager: React.FC = () => {
                 }}
               >
                 <h4>Question {index + 1 + (currentPage - 1) * itemsPerPage}:</h4>
-                <p className="question-text">{question.text}</p>
-                <p className="type-id">Type: {question.type === 'wordCloud' ? 'Word Cloud' : 'Scale Meter'}</p>
+                <p className="question-text">{getDisplayText(question)}</p>
+                <p className="type-id">Type: {question.type}</p>
                 <p className="type-id">ID: {question.id}</p>
+                {question.linkedHappinessScale && (
+                  <p className="linked-id">Linked Bar Chart ID: {question.linkedHappinessScale}</p>
+                )}
                 <div className="button-group">
                   <button className="edit-button" onClick={() => handleEditQuestion(question)}>Edit</button>
                   <button className="delete-button" onClick={() => handleDeleteQuestion(question.id)}>Delete</button>
@@ -153,7 +152,6 @@ const QuestionManager: React.FC = () => {
           </div>
         )}
 
-        {/* Pagination Controls */}
         <div className="pagination">
           {Array.from({ length: totalPages }, (_, i) => (
             <button

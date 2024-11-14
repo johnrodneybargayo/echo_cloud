@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getDatabase, ref, push } from 'firebase/database';
 import './HappinessInput.css'; // Scoped CSS for styles
 
@@ -8,6 +8,7 @@ const HappinessInput: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
   const db = getDatabase();
+  const { questionId } = useParams<{ questionId: string }>();
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -19,7 +20,7 @@ const HappinessInput: React.FC = () => {
     });
 
     setIsSubmitted(true);
-    navigate('/happiness-bar-chart');
+    navigate(`/happiness-bar-chart/${questionId}`);
   };
 
   const resetSlider = () => {

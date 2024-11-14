@@ -7,7 +7,7 @@ import './WordInput.css';
 interface Question {
   id: string;
   text: string;
-  type: 'wordCloud' | 'scaleMeter';
+  type: 'wordCloud' | 'happinessBarChart';
 }
 
 const WordInput: React.FC = () => {
@@ -30,12 +30,26 @@ const WordInput: React.FC = () => {
 
       setTimeout(() => {
         setIsSubmitted(false);
-        navigate(`/display/${questionId}`, {
-          state: {
-            questions,
-            currentQuestionIndex,
-          },
-        });
+
+        // Determine the next question type and navigate accordingly
+        const nextIndex = currentQuestionIndex + 1;
+        if (nextIndex < questions.length) {
+          const nextQuestion = questions[nextIndex];
+          const nextPath =
+            nextQuestion.type === 'happinessBarChart'
+              ? `/happiness-scale/${nextQuestion.id}`
+              : `/display/${nextQuestion.id}`;
+
+          navigate(nextPath, {
+            state: {
+              questions,
+              currentQuestionIndex: nextIndex,
+            },
+          });
+        } else {
+          // If there are no more questions, navigate to a summary or thank you page
+          navigate('/thank-you');
+        }
       }, 1500);
     }
   };

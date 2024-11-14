@@ -4,7 +4,7 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 interface Question {
   id: string; // Unique identifier for the question
   text: string; // The text of the question
-  type: 'wordCloud' | 'scaleMeter'; // Type of the question
+  type: 'wordCloud' | 'happinessBarChart'; // Updated types
 }
 
 // Define the structure of the QuestionsContext

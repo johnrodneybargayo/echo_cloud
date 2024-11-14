@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import WordCloud from 'wordcloud';
 import { Word } from '../types/word';
+import { Question } from '../types/question';
 import { useNavigate } from 'react-router-dom';
 import './WordCloud.css';
-import Loader from './loader/Loader'; // Import the Loader component
+import Loader from './loader/Loader';
 
 interface WordCloudProps {
   words: Word[];
-  questions: { id: string; text: string; type: 'wordCloud' | 'scaleMeter' }[];
+  questions: Question[];
   currentQuestionIndex: number;
   setCurrentQuestionIndex: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -30,14 +31,14 @@ const WordCloudComponent: React.FC<WordCloudProps> = ({
 
     const getColor = (index: number) => {
       const colors = ['#2C3E50', '#2980B9', '#27AE60', '#F39C12', '#E74C3C', '#8E44AD', '#D35400'];
-      return colors[index % colors.length]; // Cycle through the colors
+      return colors[index % colors.length];
     };
 
     if (canvas && words.length > 0) {
       const wordArray: [string, number][] = words.map((word) => [word.word, word.count]);
       WordCloud(canvas, {
         list: wordArray,
-        color: (word: string) => getColor(words.findIndex(w => w.word === word)),
+        color: (word: string) => getColor(words.findIndex((w) => w.word === word)),
         gridSize: Math.round(12 * (canvas.width / 800)),
         weightFactor: (size: number) => Math.max(size * (canvas.width / 800), 20),
         fontFamily: 'Arial, sans-serif',
@@ -52,23 +53,38 @@ const WordCloudComponent: React.FC<WordCloudProps> = ({
   const handleNextButtonClick = () => {
     setIsAnimating(true);
     setIsLoading(true);
-    
-    let nextIndex = currentQuestionIndex + 1;
-    if (nextIndex >= questions.length) nextIndex = 0;
 
-    const nextQuestionId = questions[nextIndex].id;
-    setCurrentQuestionIndex(nextIndex);
+    const nextIndex = currentQuestionIndex + 1;
 
-    setTimeout(() => {
-      navigate(`/enter/${nextQuestionId}`, {
-        state: {
-          questions,
-          currentQuestionIndex: nextIndex,
-        },
-      });
-      setIsAnimating(false);
-      setIsLoading(false);
-    }, 500);
+    if (nextIndex < questions.length) {
+      const nextQuestion = questions[nextIndex];
+      setCurrentQuestionIndex(nextIndex);
+
+      setTimeout(() => {
+        // Navigate based on the type of the next question
+        const nextPath =
+          nextQuestion.type === 'wordCloud'
+            ? `/enter/${nextQuestion.id}`
+            : `/happiness-scale/${nextQuestion.id}`;
+
+        navigate(nextPath, {
+          state: {
+            questions,
+            currentQuestionIndex: nextIndex,
+          },
+        });
+
+        setIsAnimating(false);
+        setIsLoading(false);
+      }, 500);
+    } else {
+      // If it's the last question, navigate to the end page or summary
+      setTimeout(() => {
+        navigate('/thank-you');
+        setIsAnimating(false);
+        setIsLoading(false);
+      }, 500);
+    }
   };
 
   return (

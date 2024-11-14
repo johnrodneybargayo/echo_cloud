@@ -45,8 +45,8 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/enter/:questionId" element={<WordInput />} />
               <Route path="/display/:questionId" element={<DisplayWordCloudWrapper />} />
-              <Route path="/happiness-scale" element={<HappinessInput />} />
-              <Route path="/happiness-bar-chart" element={<HappinessBarChart />} />
+              <Route path="/happiness-scale/:questionId" element={<HappinessInput />} />
+              <Route path="/happiness-bar-chart/:questionId" element={<HappinessBarChart />} />
               <Route path="/thank-you" element={<ThankYouPage />} />
 
               {/* Protected dashboard route */}

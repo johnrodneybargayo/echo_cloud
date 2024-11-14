@@ -5,7 +5,7 @@ import { Question } from '../types/question';
 import { getAuth } from "firebase/auth";
 
 // Helper function to check if the user has the admin role
-const isAdminUser = async () => {
+const isAdminUser = async (): Promise<boolean> => {
   const auth = getAuth();
   const user = auth.currentUser;
   if (!user) return false;
@@ -18,10 +18,6 @@ const isAdminUser = async () => {
 // Add or update a word for a specific question in the Realtime Database
 export const addWord = async (word: string, questionId: string): Promise<void> => {
   try {
-    if (!(await isAdminUser())) {
-      throw new Error('Permission denied: User is not an admin');
-    }
-    
     const wordRef = ref(db, `words/${questionId}/${word}`);
     const snapshot = await get(wordRef);
 
@@ -36,11 +32,7 @@ export const addWord = async (word: string, questionId: string): Promise<void> =
     }
   } catch (error) {
     console.error('Error adding/updating word:', error);
-    if (error instanceof Error) {
-      throw new Error('Failed to add/update word: ' + error.message);
-    } else {
-      throw new Error('Failed to add/update word: Unknown error');
-    }
+    throw new Error('Could not update or add word due to missing data or permissions.');
   }
 };
 
@@ -59,11 +51,7 @@ export const getWords = async (questionId: string): Promise<Word[]> => {
     }
   } catch (error) {
     console.error("Error getting words:", error);
-    if (error instanceof Error) {
-      throw new Error('Failed to fetch words: ' + error.message);
-    } else {
-      throw new Error('Failed to fetch words: Unknown error');
-    }
+    throw new Error(error instanceof Error ? 'Failed to fetch words: ' + error.message : 'Failed to fetch words: Unknown error');
   }
 };
 
@@ -73,22 +61,42 @@ export const addQuestion = async (question: Omit<Question, 'id'>): Promise<void>
     if (!(await isAdminUser())) {
       throw new Error('Permission denied: User is not an admin');
     }
-    
+
     const questionsRef = ref(db, 'questions');
     const newQuestionRef = push(questionsRef);
+
+    // Add the primary question (either wordCloud or happinessBarChart)
     await set(newQuestionRef, { ...question, id: newQuestionRef.key });
     console.log(`Added question with ID ${newQuestionRef.key}`);
-  } catch (error) {
-    console.error('Error adding question:', error);
+    // If the question type is 'wordCloud', no linked question is needed
+    if (question.type === 'wordCloud') {
+      // No additional action needed
+    } else if (question.type === 'happinessInput') {
+      const happinessScaleQuestionRef = push(questionsRef);
+      const happinessScaleQuestion = {
+        text: "How do you rate your happiness?",
+        type: 'happinessScale',
+        id: happinessScaleQuestionRef.key,
+      };
+
+      await set(happinessScaleQuestionRef, happinessScaleQuestion);
+      console.log(`Added linked happinessScale question with ID ${happinessScaleQuestionRef.key}`);
+
+      await update(newQuestionRef, { linkedHappinessScale: happinessScaleQuestionRef.key });
+      console.log(`Linked happinessScale question with happinessBarChart question ID ${newQuestionRef.key}`);
+    }
+  } catch (error: unknown) {
     if (error instanceof Error) {
+      console.error('Error adding question:', error.message);
       throw new Error('Failed to add question: ' + error.message);
     } else {
+      console.error('Error adding question:', error);
       throw new Error('Failed to add question: Unknown error');
     }
   }
 };
 
-// Fetch all questions from Realtime Database
+// Fetch all questions from Realtime Database, including linked questions
 export const getQuestions = async (): Promise<Question[]> => {
   try {
     const dbRef = ref(db, 'questions');
@@ -96,21 +104,39 @@ export const getQuestions = async (): Promise<Question[]> => {
 
     if (snapshot.exists()) {
       const questionsObject = snapshot.val();
-      return Object.keys(questionsObject).map((key) => ({
+      const questions = Object.keys(questionsObject).map((key) => ({
         ...questionsObject[key],
         id: key,
       })) as Question[];
-    } else {
-      console.log("No questions found");
-      return [];
+      // Exclude happinessScale questions when listing for the main display
+      return questions.filter((question) => question.type !== 'happinessScale' as string);
     }
-  } catch (error) {
-    console.error("Error getting questions:", error);
+    return [];
+  } catch (error: unknown) {
     if (error instanceof Error) {
+      console.error("Error getting questions:", error.message);
       throw new Error('Failed to fetch questions: ' + error.message);
     } else {
+      console.error("Error getting questions:", error);
       throw new Error('Failed to fetch questions: Unknown error');
     }
+  }
+};
+
+// Fetch a specific question by ID
+export const getQuestionById = async (questionId: string): Promise<Question | null> => {
+  try {
+    const questionRef = ref(db, `questions/${questionId}`);
+    const snapshot = await get(questionRef);
+
+    if (snapshot.exists()) {
+      return snapshot.val() as Question;
+    }
+    console.log(`No question found with ID ${questionId}`);
+    return null;
+  } catch (error) {
+    console.error("Error getting question by ID:", error);
+    throw new Error('Failed to fetch question: ' + (error instanceof Error ? error.message : 'Unknown error'));
   }
 };
 
@@ -129,11 +155,12 @@ export const deleteQuestion = async (questionId: string): Promise<void> => {
     const wordsRef = ref(db, `words/${questionId}`);
     await remove(wordsRef);
     console.log(`Deleted words for question ID ${questionId}`);
-  } catch (error) {
-    console.error('Error deleting question:', error);
+  } catch (error: unknown) {
     if (error instanceof Error) {
+      console.error('Error deleting question:', error.message);
       throw new Error('Failed to delete question: ' + error.message);
     } else {
+      console.error('Error deleting question:', error);
       throw new Error('Failed to delete question: Unknown error');
     }
   }
@@ -149,11 +176,12 @@ export const updateQuestion = async (questionId: string, updatedData: Partial<Qu
     const questionRef = ref(db, `questions/${questionId}`);
     await update(questionRef, updatedData);
     console.log(`Updated question with ID ${questionId}`);
-  } catch (error) {
-    console.error('Error updating question:', error);
+  } catch (error: unknown) {
     if (error instanceof Error) {
+      console.error('Error updating question:', error.message);
       throw new Error('Failed to update question: ' + error.message);
     } else {
+      console.error('Error updating question:', error);
       throw new Error('Failed to update question: Unknown error');
     }
   }
