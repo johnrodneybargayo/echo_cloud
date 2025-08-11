@@ -11,8 +11,7 @@ declare module 'qrcode.react' {
       includeMargin?: boolean;
     }
   
-    const QRCode: React.FC<QRCodeProps>;
-  
-    export default QRCode;
-  }
+    export const QRCodeCanvas: React.FC<QRCodeProps>;
+    export const QRCodeSVG: React.FC<QRCodeProps>;
+}
   

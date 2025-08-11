@@ -1,47 +1,107 @@
-/* src/components/Dashboard/AdminSettings.css */
+/* Enhanced AdminSettings CSS */
+
+.admin-settings {
+    max-width: 800px;
+    margin: 0 auto;
+}
 
 .admin-header {
-    font-size: 1.5rem; /* Font size of the header */
-    font-weight: bold; /* Bold text */
-    color: black; /* Change text color to black */
-    margin-bottom: 2rem; /* Space below the header */
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 2rem;
+    text-align: center;
 }
 
 .admin-actions {
-    display: flex; /* Use flexbox for layout */
-    flex-wrap: wrap; /* Allow wrapping for mobile/tablet */
-    gap: 1rem; /* Space between buttons */
-    justify-content: center; /* Center buttons on small screens */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
 }
 
 .admin-action-button {
-    background-color: #ff9838; /* Button background color */
-    color: white; /* Text color */
-    font-size: 1rem; /* Font size of button text */
-    font-weight: bold; /* Bold text */
-    padding: 0.75rem; /* Padding for buttons */
-    border: none; /* Remove border */
-    border-radius: 8px; /* Rounded corners for buttons */
-    cursor: pointer; /* Change cursor on hover */
-    transition: background-color 0.3s ease; /* Smooth background color transition */
-    text-align: center; /* Center text in button */
-    flex: 1 1 100%; /* Default to full width for mobile */
+    background: linear-gradient(45deg, #ff9a56, #ff6b6b);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 1.25rem 1.5rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Media query for tablets and larger screens */
-@media (min-width: 600px) {
-    .admin-action-button {
-        flex: 1 1 calc(33.333% - 1rem); /* Three columns on larger screens, subtracting the gap */
-    }
+.admin-action-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
 }
 
-/* Media query for larger desktops */
-@media (min-width: 1024px) {
-    .admin-action-button {
-        flex: 1 1 calc(33.333% - 1rem); /* Maintain three columns */
-    }
+.admin-action-button:hover::before {
+    left: 100%;
 }
 
 .admin-action-button:hover {
-    background-color: #e07b2d; /* Darker color on hover */
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+}
+
+.success-message {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: linear-gradient(45deg, #00b894, #00cec9);
+    color: white;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 500;
+    animation: slideInUp 0.3s ease;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .admin-actions {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .admin-action-button {
+        padding: 1rem;
+        font-size: 0.95rem;
+    }
+    
+    .admin-header {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-header {
+        font-size: 1.5rem;
+    }
+    
+    .admin-action-button {
+        padding: 0.875rem;
+    }
 }

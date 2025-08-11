@@ -1,26 +1,41 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getDatabase, ref, push } from 'firebase/database';
 import './HappinessInput.css'; // Scoped CSS for styles
 
-const HappinessInput: React.FC = () => {
-  const [score, setScore] = useState<number>(5);
+interface HappinessInputProps {
+  questionId: string; // Accept questionId from props
+}
+
+const HappinessInput: React.FC<HappinessInputProps> = ({ questionId }) => {
+  const [score, setScore] = useState<number>(5); // Default score to 5
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // For submit button state
   const navigate = useNavigate();
   const db = getDatabase();
-  const { questionId } = useParams<{ questionId: string }>();
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const happinessRef = ref(db, 'happinessLevels');
-    push(happinessRef, {
-      level: score,
-      timestamp: Date.now(),
-    });
+    setIsSubmitting(true); // Disable submit button during processing
 
-    setIsSubmitted(true);
-    navigate(`/happiness-bar-chart/${questionId}`);
+    // Reference to the happinessLevels database with questionId included
+    const happinessRef = ref(db, `happinessLevels/${questionId}`);
+    try {
+      await push(happinessRef, {
+        level: score,
+        timestamp: Date.now(),
+      });
+
+      setIsSubmitted(true);
+      setIsSubmitting(false); // Re-enable the submit button
+      // After submission, navigate to the happiness-bar-chart page with questionId
+      navigate(`/happiness-bar-chart/${questionId}`, { state: { questionId } });
+    } catch (error) {
+      console.error('Error submitting happiness level:', error);
+      alert('There was an error submitting your happiness level. Please try again.');
+      setIsSubmitting(false); // Re-enable the submit button on error
+    }
   };
 
   const resetSlider = () => {
@@ -29,7 +44,7 @@ const HappinessInput: React.FC = () => {
 
   return (
     <div className="happiness-container">
-       <div className="logo-placeholder-happiness">
+      <div className="logo-placeholder-happiness">
         <div className="logo-happiness"></div>
       </div>
       {isSubmitted ? (
@@ -41,7 +56,7 @@ const HappinessInput: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <h1 className="block text-2xl font-bold text-black header-label">
-              On a scale of 1-10, how happy are you?
+                On a scale of 1-10, how happy are you?
               </h1>
               <div className="slider-container">
                 <div className="flex justify-between slider-labels">
@@ -82,8 +97,9 @@ const HappinessInput: React.FC = () => {
               <button
                 type="submit"
                 className="submit-btn w-full rounded-full text-white py-3 px-6 hover:opacity-90"
+                disabled={isSubmitting} // Disable button during submission
               >
-                SUBMIT
+                {isSubmitting ? 'Submitting...' : 'SUBMIT'}
               </button>
             </div>
           </form>

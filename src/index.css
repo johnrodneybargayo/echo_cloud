@@ -1,3 +1,10 @@
+/* postcss-disable-next-line */
+@tailwind base;
+/* postcss-disable-next-line */
+@tailwind components;
+/* postcss-disable-next-line */
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

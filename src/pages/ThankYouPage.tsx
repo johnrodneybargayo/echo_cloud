@@ -1,7 +1,29 @@
 import React from 'react';
-import logo from '../assets/verbivibe_logo.png'; // Correct path to the logo in the assets folder
+import { useNavigate } from 'react-router-dom';
+import { getDatabase, ref, remove } from 'firebase/database';
+import logo from '../assets/verbivibe_logo.png';
 
 const ThankYouPage: React.FC = () => {
+  const navigate = useNavigate();
+  const db = getDatabase();
+
+  const handleClearAndReturn = async () => {
+    try {
+      // Clear questions, words, and happiness levels in Firebase
+      await Promise.all([
+        remove(ref(db, 'questions')),
+        remove(ref(db, 'words')),
+        remove(ref(db, 'happinessLevels')),
+      ]);
+      console.log("Database cleared successfully.");
+
+      // Navigate back to dashboard after clearing
+      navigate('/dashboard');
+    } catch (error) {
+      console.error("Error clearing data:", error);
+    }
+  };
+
   return (
     <div style={{
       display: 'flex', 
@@ -22,11 +44,11 @@ const ThankYouPage: React.FC = () => {
           alt="Logo shadow"
           style={{ 
             position: 'absolute',
-            top: '10px', // Adjust for shadow effect
-            left: '10px', // Adjust for shadow effect
+            top: '10px',
+            left: '10px',
             width: '100%',
-            filter: 'blur(4px)', // Add a slight blur for the shadow
-            opacity: 0.6, // Adjust opacity for shadow depth
+            filter: 'blur(4px)',
+            opacity: 0.6,
           }}
         />
         
@@ -36,13 +58,31 @@ const ThankYouPage: React.FC = () => {
           alt="Logo" 
           style={{ 
             width: '100%',
-            position: 'relative', // Main image layer
+            position: 'relative',
           }}
         />
       </div>
       <h1 style={{ fontSize: '3rem', color: '#fff', textAlign: 'center' }}>
         Thank you for participating!
       </h1>
+      <button 
+        onClick={handleClearAndReturn} 
+        style={{
+          marginTop: '20px',
+          padding: '10px 20px',
+          fontSize: '1.25rem',
+          color: '#fff',
+          backgroundColor: '#4A90E2',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          transition: 'opacity 0.3s',
+        }}
+        onMouseOver={(e) => e.currentTarget.style.opacity = '0.8'}
+        onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+      >
+        Go Back to Dashboard
+      </button>
     </div>
   );
 };

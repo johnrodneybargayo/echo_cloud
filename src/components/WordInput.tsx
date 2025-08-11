@@ -30,26 +30,13 @@ const WordInput: React.FC = () => {
 
       setTimeout(() => {
         setIsSubmitted(false);
-
-        // Determine the next question type and navigate accordingly
-        const nextIndex = currentQuestionIndex + 1;
-        if (nextIndex < questions.length) {
-          const nextQuestion = questions[nextIndex];
-          const nextPath =
-            nextQuestion.type === 'happinessBarChart'
-              ? `/happiness-scale/${nextQuestion.id}`
-              : `/display/${nextQuestion.id}`;
-
-          navigate(nextPath, {
-            state: {
-              questions,
-              currentQuestionIndex: nextIndex,
-            },
-          });
-        } else {
-          // If there are no more questions, navigate to a summary or thank you page
-          navigate('/thank-you');
-        }
+        // Navigate to the display page for the current question after submission
+        navigate(`/display/${questionId}`, {
+          state: {
+            questions,
+            currentQuestionIndex,
+          },
+        });
       }, 1500);
     }
   };

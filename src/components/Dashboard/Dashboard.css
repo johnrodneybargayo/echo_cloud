@@ -4,8 +4,9 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #2a3990; /* Background color for the dashboard */
-    color: #ffffff; /* Default text color */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .top-navigation {
@@ -13,97 +14,198 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: #2a3990; /* Keep the same background color */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-container {
     display: flex;
     flex: 1;
-    padding-top: 0;
-    padding-right: 2rem;
-    padding-left: 2rem;
+    padding: 2rem;
+    gap: 2rem;
+    margin: 0 auto;
+    width: 100%;
+    border-radius: 16px; /* Added border radius for consistency */
 }
 
 .sidebar {
-    width: 250px; /* Fixed width for the sidebar */
-    border-radius: 8px; /* Rounded corners for sidebar */
-    height: calc(100vh - 70px); /* Adjust height based on top navigation */
+    width: 280px;
+    min-width: 280px;
+    border-radius: 16px;
+    height: fit-content;
     display: flex;
-    flex-direction: column; /* Stack items vertically */
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-title {
-    font-size: 40px;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 1rem;
-    margin-top: -4px;
-    text-align: left;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a202c; /* Changed from white to dark gray */
+    margin-bottom: 1.5rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 1.5rem 1.5rem 0;
+    background: linear-gradient(45deg, #ff9a56, #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .sidebar-buttons {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    background: #ff9838;
-    padding: 20px;
-    height: 100%;
-    border-radius: 10px;
+    gap: 0.75rem;
+    padding: 1.5rem;
 }
 
 .sidebar-button {
-    width: 100%; /* Full width for buttons */
-    padding: 1rem; /* Button padding */
-    background-color: rgba(255, 255, 255, 0.2); /* Background color for buttons */
-    color: white; /* Text color */
-    font-weight: bold; /* Bold text */
-    border: none; /* No border */
-    border-radius: 8px; /* Rounded corners */
-    text-align: left; /* Align text to the left */
-    transition: background-color 0.3s ease; /* Smooth background transition */
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 12px;
+    text-align: left;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
 }
 
 .sidebar-button.active {
-    background-color: #d96666; /* Color for active button */
+    background: linear-gradient(45deg, #ff9a56, #ff6b6b);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    transform: translateY(-2px);
 }
 
-.sidebar-button:hover {
-    background-color: rgba(255, 255, 255, 0.4); /* Hover effect for buttons */
+.sidebar-button:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
 }
 
 .dashboard-content {
-    flex: 1; /* Take remaining space */
-    padding: 2rem; /* Padding inside the content area */
-    background-color: #f8f9fa; /* White background for content */
-    border-radius: 12px; /* Rounded corners for content */
-    margin: 0 1rem; /* Adjusted margins for spacing */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    flex: 1;
+    padding: 2rem;
+    background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+    color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow-y: auto;
+    max-height: calc(100vh - 140px);
+    position: relative; /* Ensure proper stacking context */
+    z-index: 1; /* Lower z-index than navigation */
 }
 
 .dashboard-title {
-    font-size: 2rem; /* Font size for the title */
-    font-weight: bold; /* Bold weight */
-    margin-bottom: 1rem; /* Space below the title */
-    text-align: left; /* Align left */
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    background: linear-gradient(45deg, #fbbf24, #f59e0b); /* Warm gold gradient for contrast */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
-.admin-settings, .question-manager {
-    max-width: 70rem; /* Limit width for admin settings and question manager */
-    margin: auto; /* Center these components */
+/* Enhanced Responsive Design */
+@media (max-width: 1200px) {
+  .dashboard-container {
+    padding: 1.5rem;
+  }
+  
+  .sidebar {
+    width: 260px;
+    min-width: 260px;
+  }
 }
 
-.admin-action-button {
-    background-color: #ff9838; /* Background for action buttons */
-    color: white; /* Text color */
-    font-size: 1rem; /* Font size */
-    font-weight: bold; /* Bold text */
-    padding: 0.75rem; /* Button padding */
-    border: none; /* No border */
-    border-radius: 8px; /* Rounded corners */
-    cursor: pointer; /* Pointer on hover */
-    transition: background-color 0.3s ease; /* Smooth transition */
+@media (max-width: 1024px) {
+  .dashboard-container {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+  
+  .sidebar {
+    width: 100%;
+    min-width: unset;
+  }
+  
+  .sidebar-buttons {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .sidebar-button {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .dashboard-content {
+    max-height: none;
+  }
 }
 
-.admin-action-button:hover {
-    background-color: #e07b2d; /* Darker color on hover */
+@media (max-width: 768px) {
+  .top-navigation {
+    padding: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .dashboard-container {
+    padding: 0.75rem;
+  }
+  
+  .sidebar-title {
+    font-size: 1.75rem;
+  }
+  
+  .sidebar-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .sidebar-button {
+    padding: 0.875rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .dashboard-content {
+    padding: 1.5rem;
+  }
+  
+  .dashboard-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 0.5rem;
+  }
+  
+  .dashboard-content {
+    padding: 1rem;
+  }
+  
+  .sidebar-title {
+    font-size: 1.5rem;
+    padding: 1rem 1rem 0;
+  }
+  
+  .sidebar-buttons {
+    padding: 1rem;
+  }
 }

@@ -35,6 +35,13 @@ const WordCloudComponent: React.FC<WordCloudProps> = ({
     };
 
     if (canvas && words.length > 0) {
+      // Set canvas dimensions based on container
+      const container = canvas.parentElement;
+      if (container) {
+        canvas.width = Math.min(container.clientWidth - 40, 800);
+        canvas.height = Math.min(container.clientHeight - 200, 600);
+      }
+
       const wordArray: [string, number][] = words.map((word) => [word.word, word.count]);
       WordCloud(canvas, {
         list: wordArray,
@@ -61,11 +68,17 @@ const WordCloudComponent: React.FC<WordCloudProps> = ({
       setCurrentQuestionIndex(nextIndex);
 
       setTimeout(() => {
-        // Navigate based on the type of the next question
-        const nextPath =
-          nextQuestion.type === 'wordCloud'
-            ? `/enter/${nextQuestion.id}`
-            : `/happiness-scale/${nextQuestion.id}`;
+        // Fixed navigation logic
+        let nextPath;
+        if (nextQuestion.type === 'wordCloud') {
+          nextPath = `/enter/${nextQuestion.id}`;
+        } else if (nextQuestion.type === 'happinessInput') {
+          nextPath = `/happiness-scale/${nextQuestion.id}`;
+        } else if (nextQuestion.type === 'happinessBarChart') {
+          nextPath = `/happiness-bar-chart/${nextQuestion.id}`;
+        } else {
+          nextPath = '/thank-you';
+        }
 
         navigate(nextPath, {
           state: {
@@ -78,7 +91,6 @@ const WordCloudComponent: React.FC<WordCloudProps> = ({
         setIsLoading(false);
       }, 500);
     } else {
-      // If it's the last question, navigate to the end page or summary
       setTimeout(() => {
         navigate('/thank-you');
         setIsAnimating(false);

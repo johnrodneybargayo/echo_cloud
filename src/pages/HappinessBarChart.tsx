@@ -1,19 +1,25 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
-import { useNavigate } from 'react-router-dom';
 import './HappinessBarChart.css';
 import logo from '../assets/verbivibe_logo.png';
 
 Chart.register(...registerables);
 
 const HappinessBarChart: React.FC = () => {
+  const { questionId } = useParams<{ questionId: string }>();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const db = getDatabase();
+
+  const { questions = [], currentQuestionIndex = 0 } = location.state || {};
+
   const [chartData, setChartData] = useState<any>({
     labels: [],
     datasets: [],
   });
-  const navigate = useNavigate();
 
   const emojis = useMemo(
     () => ['😢', '😞', '😐', '🙂', '😃', '😄', '😆', '😁', '😎', '🥳'],
@@ -21,9 +27,13 @@ const HappinessBarChart: React.FC = () => {
   );
 
   useEffect(() => {
-    const db = getDatabase();
-    const happinessRef = ref(db, 'happinessLevels');
+    if (!questionId) {
+      console.error('No questionId provided. Redirecting to thank-you page.');
+      navigate('/thank-you');
+      return;
+    }
 
+    const happinessRef = ref(db, `happinessLevels/${questionId}`);
     const unsubscribe = onValue(happinessRef, (snapshot) => {
       const levels = snapshot.val() || {};
       const counts: { [key: number]: number } = {};
@@ -32,10 +42,12 @@ const HappinessBarChart: React.FC = () => {
         counts[i] = 0;
       }
 
-      for (const key in levels) {
-        const level = Number(levels[key].level);
-        counts[level] = (counts[level] || 0) + 1;
-      }
+      Object.values(levels).forEach((entry: any) => {
+        if (typeof entry.level === 'number') {
+          const level = entry.level;
+          counts[level] = (counts[level] || 0) + 1;
+        }
+      });
 
       const data = {
         labels: Object.keys(counts).map((key) => `Level ${key}`),
@@ -59,7 +71,7 @@ const HappinessBarChart: React.FC = () => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [db, navigate, questionId]);
 
   const customPlugin = {
     id: 'customPlugin',
@@ -71,16 +83,15 @@ const HappinessBarChart: React.FC = () => {
       ctx.save();
 
       chart.getDatasetMeta(0).data.forEach((bar: any, index: number) => {
-        const level = Number(chart.data.labels[index].split(' ')[1]);
-        const emoji = emojis[level - 1];
+        const level = parseInt(chart.data.labels[index]?.split(' ')[1] || '0', 10);
+        const emoji = emojis[level - 1] || '';
         const x = bar.x;
 
         const emojiFontSize = Math.min(Math.max(barWidth * 0.6, 30), 50);
         const countFontSize = Math.min(Math.max(barWidth * 0.3, 10), 20);
 
-        // Adjust positions to bring elements closer together
         const yEmoji = Math.max(bar.y - 45, emojiFontSize + 10);
-        const yCount = bar.y - 5; // Closer to the emoji
+        const yCount = bar.y - 5;
 
         ctx.font = `${emojiFontSize}px Arial`;
         ctx.textAlign = 'center';
@@ -95,7 +106,33 @@ const HappinessBarChart: React.FC = () => {
     },
   };
 
-  const handleThankYouClick = () => {
+  const handleNextQuestion = () => {
+    console.log('Current question index:', currentQuestionIndex);
+    console.log('Total questions:', questions.length);
+
+    let nextQuestionIndex = currentQuestionIndex + 1;
+
+    while (nextQuestionIndex < questions.length) {
+      const nextQuestion = questions[nextQuestionIndex];
+      console.log('Evaluating question at index:', nextQuestionIndex, 'Question ID:', nextQuestion.id);
+
+      if (nextQuestion.type === 'wordCloud' || nextQuestion.type === 'happinessInput') {
+        console.log('Navigating to next question type:', nextQuestion.type, 'ID:', nextQuestion.id);
+
+        const nextPath =
+          nextQuestion.type === 'wordCloud'
+            ? `/enter/${nextQuestion.id}`
+            : `/happiness-scale/${nextQuestion.id}`;
+
+        navigate(nextPath, {
+          state: { questions, currentQuestionIndex: nextQuestionIndex },
+        });
+        return;
+      }
+      nextQuestionIndex++;
+    }
+
+    console.log('No more questions of relevant type. Navigating to thank-you page.');
     navigate('/thank-you');
   };
 
@@ -112,24 +149,17 @@ const HappinessBarChart: React.FC = () => {
             maintainAspectRatio: false,
             scales: {
               x: {
-                grid: {
-                  display: false,
-                },
+                grid: { display: false },
                 ticks: {
                   color: '#333',
-                  font: {
-                    size: 16,
-                    weight: 'bold',
-                  },
+                  font: { size: 16, weight: 'bold' },
                   padding: 10,
                 },
               },
               y: {
                 beginAtZero: true,
                 max: 250,
-                grid: {
-                  display: true,
-                },
+                grid: { display: true },
                 ticks: {
                   color: '#333',
                   stepSize: 50,
@@ -137,26 +167,15 @@ const HappinessBarChart: React.FC = () => {
                 },
               },
             },
-            layout: {
-              padding: {
-                bottom: 20,
-              },
-            },
-            animation: {
-              duration: 1500,
-              easing: 'easeInOutQuad',
-            },
+            layout: { padding: { bottom: 20 } },
+            animation: { duration: 1500, easing: 'easeInOutQuad' },
             plugins: {
-              legend: {
-                display: false,
-              },
+              legend: { display: false },
               title: {
                 display: true,
                 text: 'Real-Time Happiness Level Chart',
               },
-              tooltip: {
-                enabled: true,
-              },
+              tooltip: { enabled: true },
             },
           }}
           plugins={[customPlugin]}
@@ -164,8 +183,8 @@ const HappinessBarChart: React.FC = () => {
       </div>
 
       <div className="thank-you-button-container">
-        <button onClick={handleThankYouClick} className="thank-you-btn">
-          End Session
+        <button onClick={handleNextQuestion} className="thank-you-btn">
+          Next
         </button>
       </div>
     </div>
